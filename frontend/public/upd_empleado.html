@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualizar Empleado</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Enlace al estilo personalizado si lo necesitas -->
+    <link rel="stylesheet" href="./css/styles.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+            background-color: #ffffff;
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .btn-primary {
+            background-color: #ffc107;
+            border-color: #ffc107;
+            color: #343a40;
+        }
+        .btn-primary:hover {
+            background-color: #e0a800;
+            border-color: #d39e00;
+        }
+        .form-group label {
+            color: #495057;
+        }
+        h2 {
+            color: #343a40;
+        }
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center mb-4"><i class="fas fa-user-edit"></i> Actualizar Empleado</h2>
+        <form id="update-empleado-form">
+            <div class="form-group">
+                <label for="nombre"><i class="fas fa-user"></i> Nombre:</label>
+                <input type="text" class="form-control" id="nombre" required>
+            </div>
+
+            <div class="form-group">
+                <label for="apellido"><i class="fas fa-user"></i> Apellido:</label>
+                <input type="text" class="form-control" id="apellido" required>
+            </div>
+
+            <div class="form-group">
+                <label for="direccion"><i class="fas fa-map-marker-alt"></i> Dirección:</label>
+                <input type="text" class="form-control" id="direccion" required>
+            </div>
+
+            <div class="form-group">
+                <label for="pais"><i class="fas fa-flag"></i> País:</label>
+                <select class="form-control" id="pais" required>
+                    <!-- Aquí agregarás la lista de países dinámicamente -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="telefono"><i class="fas fa-phone"></i> Teléfono:</label>
+                <input type="text" class="form-control" id="telefono" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email"><i class="fas fa-envelope"></i> Email:</label>
+                <input type="email" class="form-control" id="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="area"><i class="fas fa-building"></i> Área:</label>
+                <select class="form-control" id="area" required>
+                    <!-- Aquí agregarás la lista de áreas dinámicamente -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="fecha_ingreso"><i class="fas fa-calendar-alt"></i> Fecha de Ingreso:</label>
+                <input type="date" class="form-control" id="fecha_ingreso" required>
+            </div>
+
+            <div class="form-group">
+                <label for="fecha_salida"><i class="fas fa-calendar-alt"></i> Fecha de Salida:</label>
+                <input type="date" class="form-control" id="fecha_salida">
+            </div>
+
+            <div class="form-group">
+                <label for="salario"><i class="fas fa-dollar-sign"></i> Salario:</label>
+                <input type="number" class="form-control" id="salario" step="0.01">
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-sync-alt"></i> Actualizar Empleado</button>
+            <div id="error-message" class="alert alert-danger d-none mt-3"></div>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="./js/upd_empleado.js"></script>
+    <script src="js/validar.js"></script>
+    <script src="js/ventanaAviso.js"></script>
+    <script>inicializarAut()</script>
+</body>
+</html>

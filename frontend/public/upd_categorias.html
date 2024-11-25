@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualizar Categoría</title>
+    <!-- Enlace al CSS de Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Enlace al estilo personalizado si lo necesitas -->
+    <link rel="stylesheet" href="./css/styles.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 500px;
+            margin-top: 50px;
+            background-color: #ffffff;
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .btn-primary {
+            background-color: #ffc107;
+            border-color: #ffc107;
+            color: #343a40;
+        }
+        .btn-primary:hover {
+            background-color: #e0a800;
+            border-color: #d39e00;
+        }
+        .form-group label {
+            color: #495057;
+        }
+        h2 {
+            color: #343a40;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4"><i class="fas fa-edit"></i> Actualizar Categoría</h2>
+                <form id="update-categoria-form">
+                    <div class="form-group">
+                        <label for="categoria-id"><i class="fas fa-id-badge"></i> ID de la categoría:</label>
+                        <input type="text" class="form-control" id="categoria-id" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="categoria-name"><i class="fas fa-tag"></i> Nombre de la categoría:</label>
+                        <input type="text" class="form-control" id="categoria-name" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-sync-alt"></i> Actualizar categoría</button>
+                    <div id="error-message" class="alert alert-danger mt-3" style="display: none;"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enlace a los archivos JS de Bootstrap y JavaScript personalizado -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="./js/upd_categoria.js"></script>
+    <script src="js/validar.js"></script>
+    <script src="js/ventanaAviso.js"></script>
+    <script>inicializarAut()</script>
+</body>
+</html>
