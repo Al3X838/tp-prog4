@@ -89,7 +89,7 @@ function mostrarVentana(mensaje, b1) {
         gif.src = "../img/no-emotiguy.gif";
         gif.style.display = 'block';
     } else {
-        gif.src = "../img/alpelo.gif";
+        gif.src = "../img/alpelo1.gif";
         gif.style.display = 'block';
     }
 

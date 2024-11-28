@@ -31,7 +31,7 @@ router.post('/', async (req, res) => { // define una ruta POST en el endpoint
         const connection = await odbc.connect(`DSN=prog4;UID=${username};PWD=${password}`);
         await connection.close();
 
-        const token = jwt.sign({ username }, claveMegaSecreta, { expiresIn: '3h' });
+        const token = jwt.sign({ username }, claveMegaSecreta, { expiresIn: '1h' });
         res.status(200).json({ token });
 
         //res.status(200).send("Conexión exitosa");

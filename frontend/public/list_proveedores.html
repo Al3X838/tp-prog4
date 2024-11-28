@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Empleados</title>
+    <title>Lista de Proveedores</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="css/list_empleados.css">
+    <link rel="stylesheet" href="css/list_proveedores.css">
+    
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
@@ -18,30 +19,30 @@
                     <a class="nav-link" href="/home.html"><i class="fas fa-home"></i> Inicio</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="#"><i class="fas fa-users"></i> Empleados</a>
+                    <a class="nav-link" href="#"><i class="fas fa-users"></i> Proveedores</a>
                 </li>
             </ul>
         </div>
     </nav>
     
     <div class="container mt-5">
-        <h2 class="mb-4"><i class="fas fa-users"></i> Empleados</h2>
-        <a href="add_empleado.html" class="btn btn-primary mb-3"><i class="fas fa-plus-circle"></i> Agregar Empleado</a>
+        <h2 class="mb-4"><i class="fas fa-users"></i> Proveedores</h2>
+        <a href="add_proveedor.html" class="btn btn-primary mb-3"><i class="fas fa-plus-circle"></i> Agregar Proveedor</a>
         <div id="error-message" class="alert alert-danger d-none"></div>
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead class="thead-dark">
                     <tr>
                         <th>ID</th>
-                        <th>Nombre y Apellido</th>
+                        <th>Nombre</th>
                         <th>Dirección</th>
                         <th>Teléfono</th>
                         <th>Email</th>
-                        <th>Acciones</th> 
+                        <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody id="empleados-list"></tbody>
-                <tr id="detalles"></tr>
+                <tbody id="proveedores-list"></tbody>
+                
             </table>
         </div>
     </div>
@@ -50,7 +51,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="./js/list_empleados.js"></script>
+    <script src="./js/list_proveedores.js"></script>
     <script src="js/validar.js"></script>
     <script src="js/ventanaAviso.js"></script>
     <script>inicializarAut()</script>

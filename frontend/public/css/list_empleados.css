@@ -1,0 +1,84 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.navbar {
+    background-color: #343a40 !important;
+}
+
+.navbar-brand,
+.nav-link {
+    color: #ffffff !important;
+}
+
+.nav-link:hover {
+    color: #ffc107 !important;
+}
+
+.btn-primary {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #343a40;
+}
+
+.btn-primary:hover {
+    background-color: #e0a800;
+    border-color: #d39e00;
+}
+
+.container h2 {
+    color: #343a40;
+}
+
+.error-message {
+    color: red;
+    font-weight: bold;
+}
+
+.detalles-content {
+    background-color: #ffffff;
+    /* Fondo blanco */
+    border-left: 5px solid #f39f0e;
+    /* Borde izquierdo naranja */
+    border-right: 5px solid #f39f0e;
+    /* Borde derecho naranja */
+    display: flex;
+    /* Para alinear el contenido en una sola línea */
+    justify-content: space-around;
+    /* Distribuir el espacio equitativamente */
+    align-items: center;
+    /* Alinear verticalmente */
+    padding: 15px;
+    /* Espaciado interno */
+    animation: fadeIn 0.5s ease-in-out;
+    /* Animación suave de despliegue */
+}
+
+.detalles-content p {
+    font-size: 1rem;
+    /* Tamaño de fuente */
+    color: #333333;
+    /* Color del texto */
+    margin: 0;
+    /* Sin margen */
+    padding: 0 10px;
+    /* Espaciado entre los textos */
+}
+
+.detalles-content strong {
+    color: #b0740d;
+    /* Color naranja para los títulos */
+}
+
+/* Animación suave */
+@keyframes fadeIn {
+    from {
+        opacity: 1;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     data.paises.forEach(pais => { // itera cada pais recibido
                         const option = document.createElement('option'); // crea la etiqueta option
                         option.value = pais.PAIS; // asigna los valores al atributo
-                        option.textContent = pais.NOMBRE; // asigna el nomrbre como texto visible
+                        option.textContent = pais.NOMBRE + '('+ pais.PAIS +')'; // asigna el nomrbre como texto visible
                         paisSelect.appendChild(option); // agrega el option al select
                     });
                 } else {
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     data.areas.forEach(area => {
                         const option = document.createElement('option');
                         option.value = area.AREA;
-                        option.textContent = area.NOMBRE;
+                        option.textContent = area.NOMBRE + '('+ area.AREA +')';
                         areaSelect.appendChild(option);
                     });
                 } else {
@@ -71,13 +71,14 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => response.json())
             .then(data => {
                 if (data.success && data.empleado) {
+                    console.log(data.empleado);
                     document.getElementById('nombre').value = data.empleado.NOMBRE;
                     document.getElementById('apellido').value = data.empleado.APELLIDO;
                     document.getElementById('direccion').value = data.empleado.DIRECCION;
-                    document.getElementById('pais').value = data.empleado.PAIS;
+                    document.getElementById('pais').value = data.empleado.PAIS_ID;
                     document.getElementById('telefono').value = data.empleado.TELEFONO;
                     document.getElementById('email').value = data.empleado.EMAIL;
-                    document.getElementById('area').value = data.empleado.AREA;
+                    document.getElementById('area').value = data.empleado.AREA_ID;
                     document.getElementById('fecha_ingreso').value = data.empleado.FECHA_INGRESO;
                     document.getElementById('fecha_salida').value = data.empleado.FECHA_SALIDA;
                     document.getElementById('salario').value = data.empleado.SALARIO;
@@ -107,7 +108,9 @@ document.addEventListener('DOMContentLoaded', function () {
             fecha_salida: document.getElementById('fecha_salida').value || null,
             salario: document.getElementById('salario').value
         };
-
+        console.log('apellido', apellido);
+        
+        
         fetch(`/empleados/update/${empleadoId}`, { // envia los datos al servidor
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

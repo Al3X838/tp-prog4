@@ -3,7 +3,7 @@ async function checkearAut() {
     console.log('token: ', token); // ver si hay token
 
     if (!token || token == null) {
-        mostrarVentana("Tienes que iniciar sesión para continuar.🤙🤙",1);
+        mostrarVentana("Debes iniciar sesión para continuar.",1);
         setTimeout(() => {
             window.location.href = '/login.html';}, 3000); // espera 3 segiundos        
         return;

@@ -22,6 +22,7 @@ const handleDbError = (err, res, action) => {
 };
 
 // Ruta para obtener todos los empleados
+/*
 router.get('/', async (req, res) => {
     try {
         const connection = await getConnection();
@@ -32,13 +33,62 @@ router.get('/', async (req, res) => {
         handleDbError(err, res, 'fetching empleados');
     }
 });
+*/
+router.get('/', async (req, res) => {
+    try {
+        const connection = await getConnection();
+        const result = await connection.query(`
+            SELECT
+            EMPLEADOS.EMPLEADO,
+            EMPLEADOS.NOMBRE AS EMPLEADO_NOMBRE,
+            EMPLEADOS.APELLIDO AS EMPLEADO_APELLIDO,
+            EMPLEADOS.DIRECCION,
+            EMPLEADOS.TELEFONO,
+            EMPLEADOS.EMAIL,
+            EMPLEADOS.SALARIO,
+            EMPLEADOS.FECHA_INGRESO,
+            EMPLEADOS.FECHA_SALIDA,
+            AREAS.AREA AS AREA_ID,
+            AREAS.NOMBRE AS AREA_NOMBRE,
+            PAISES.PAIS AS PAIS_ID,
+            PAISES.NOMBRE AS PAIS_NOMBRE
+            FROM EMPLEADOS
+            JOIN AREAS ON EMPLEADOS.AREA = AREAS.AREA
+            JOIN PAISES ON EMPLEADOS.PAIS = PAISES.PAIS
+            ORDER BY EMPLEADO_NOMBRE
+            `);
+        await connection.close();
+        res.json({ success: true, empleados: result });
+    } catch (err) {
+        handleDbError(err, res, 'fetching empleados');
+    }
+});
+
 
 // Ruta GET para obtener un empleado específico por su ID
 router.get('/empleado/:id', async (req, res) => {
     const { id } = req.params;
     try {
         const connection = await getConnection();
-        const result = await connection.query(`SELECT * FROM EMPLEADOS WHERE EMPLEADO = ?` , [id]);
+        const result = await connection.query(`
+            SELECT
+            EMPLEADOS.EMPLEADO,
+            EMPLEADOS.NOMBRE,
+            EMPLEADOS.APELLIDO,
+            EMPLEADOS.DIRECCION,
+            EMPLEADOS.TELEFONO,
+            EMPLEADOS.EMAIL,
+            EMPLEADOS.FECHA_INGRESO,
+            EMPLEADOS.FECHA_SALIDA,
+            EMPLEADOS.SALARIO,
+            AREAS.AREA AS AREA_ID,
+            AREAS.NOMBRE AS AREA_NOMBRE,
+            PAISES.PAIS AS PAIS_ID,
+            PAISES.NOMBRE AS PAIS_NOMBRE
+            FROM EMPLEADOS
+            JOIN AREAS ON EMPLEADOS.AREA = AREAS.AREA
+            JOIN PAISES ON EMPLEADOS.PAIS = PAISES.PAIS
+            WHERE EMPLEADO = ?` , [id]);
         await connection.close();
 
         if (result.length > 0) {

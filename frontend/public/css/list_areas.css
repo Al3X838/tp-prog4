@@ -1,0 +1,49 @@
+body {
+    background-color: #f8f9fa;
+    font-family: 'Arial', sans-serif;
+}
+.navbar {
+    background-color: #343a40 !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.navbar-brand, .nav-link {
+    color: #ffffff !important;
+}
+.nav-link:hover {
+    color: #ffc107 !important;
+}
+.container h2 {
+    color: #343a40;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.btn-primary {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #343a40;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+.btn-primary:hover {
+    background-color: #e0a800;
+    border-color: #d39e00;
+    color: #fff;
+}
+.table {
+    margin-top: 20px;
+}
+.table thead {
+    background-color: #343a40;
+    color: #fff;
+}
+.error-message {
+    color: #dc3545;
+    font-weight: bold;
+    display: block;
+}
+@media (max-width: 768px) {
+    .table {
+        font-size: 0.9rem;
+    }
+}

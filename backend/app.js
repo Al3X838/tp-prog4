@@ -7,7 +7,8 @@ const areasRouter = require('./routes/areas'); // Ruta para áreas
 const empleadosRouter = require('./routes/empleados');  // Ruta para empleados
 const paisesRouter = require('./routes/paises');  // Ruta para países
 const categoriasRouter = require('./routes/categorias');  
-const marcasRouter = require('./routes/marcas');  
+const marcasRouter = require('./routes/marcas');
+const proveedoresRouter = require('./routes/proveedores');  
 const autenticarToken = require('./routes/autenticacion'); 
 
 
@@ -90,6 +91,16 @@ app.get('/upd_marca',autenticarToken, (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/public/upd_marca.html'));
 });
 
+app.get('/list_proveedores',autenticarToken, (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/public/list_proveedores.html'));
+});
+app.get('/add_proveedor',autenticarToken, (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/public/add_proveedor.html'));
+});
+app.get('/upd_proveedor',autenticarToken, (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/public/upd_proveedor.html'));
+});
+
 // Rutas de microservicios
 app.use('/connect', connectRouter);
 app.use('/areas', areasRouter);
@@ -97,6 +108,7 @@ app.use('/empleados', empleadosRouter); // Ruta para empleados
 app.use('/paises', paisesRouter); // Ruta para países
 app.use('/categorias', categoriasRouter); // Ruta para países
 app.use('/marcas', marcasRouter);
+app.use('/proveedores', proveedoresRouter);
 
 
 // Inicia el servidor
