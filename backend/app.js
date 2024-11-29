@@ -8,7 +8,8 @@ const empleadosRouter = require('./routes/empleados');  // Ruta para empleados
 const paisesRouter = require('./routes/paises');  // Ruta para países
 const categoriasRouter = require('./routes/categorias');  
 const marcasRouter = require('./routes/marcas');
-const proveedoresRouter = require('./routes/proveedores');  
+const proveedoresRouter = require('./routes/proveedores'); 
+const productosRouter = require('./routes/productos'); 
 const autenticarToken = require('./routes/autenticacion'); 
 
 
@@ -101,6 +102,10 @@ app.get('/upd_proveedor',autenticarToken, (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/public/upd_proveedor.html'));
 });
 
+app.get('/list_productos',autenticarToken, (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/public/list_productos.html'));
+});
+
 // Rutas de microservicios
 app.use('/connect', connectRouter);
 app.use('/areas', areasRouter);
@@ -109,6 +114,7 @@ app.use('/paises', paisesRouter); // Ruta para países
 app.use('/categorias', categoriasRouter); // Ruta para países
 app.use('/marcas', marcasRouter);
 app.use('/proveedores', proveedoresRouter);
+app.use('/productos', productosRouter);
 
 
 // Inicia el servidor
