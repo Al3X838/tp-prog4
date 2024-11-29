@@ -6,7 +6,7 @@ function autenticarToken(req, res, next) { // middleware
     const token = authHeader && authHeader.split(' ')[1]; //obtiene el token del encabezado
 
     if (!token) {
-        return res.status(401).send("ndaipori token");
+        return res.status(401).send("No existe el token");
     }
     
     jwt.verify(token, claveMegaSecreta, (err, user) => { // verify verifica(🤯) si el token es valido
@@ -14,7 +14,7 @@ function autenticarToken(req, res, next) { // middleware
             return res.status(403).send("Token invalido o expirado");
         }
 
-        console.log("token valido", user);
+        //console.log("token valido", user);
         req.user = user; 
         next();
     });

@@ -28,9 +28,9 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(error => console.error('Error al cargar países:', error));
     };
   
-
+    loadPaises();
     if (proveedorId) { // verifica si existe 
-        console.log('proveedorid',proveedorId);
+        //console.log('proveedorid',proveedorId);
         fetch(`/proveedores/proveedor/${proveedorId}`, { method: 'GET' })
             .then(response => response.json())
             .then(data => {
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
-    loadPaises();
+    
     form.addEventListener('submit', function (event) {
         event.preventDefault();
         
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (data.success) {
                 window.location.href = '../list_proveedores.html';
             } else {
-                errorMessage.textContent = data.error || 'Error al agregar el proveedor.';  
+                errorMessage.textContent = data.error || 'Error al actualizar el proveedor.';  
             }
         })
         .catch(error => {

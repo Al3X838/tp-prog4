@@ -21,7 +21,7 @@ async function checkearAut() {
                 'Accept': 'application/json'
             },
         });
-        console.log('respuesta', response.status);
+        //console.log('respuesta', response.status);
 
         if (!response.ok) {
             console.log('', response.status);

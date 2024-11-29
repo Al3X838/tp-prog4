@@ -110,7 +110,6 @@ document.addEventListener('DOMContentLoaded', function () {
         };
         console.log('apellido', apellido);
         
-        
         fetch(`/empleados/update/${empleadoId}`, { // envia los datos al servidor
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
