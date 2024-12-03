@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('add-area-form');
-    const errorMessage = document.getElementById('error-message');
 
     form.addEventListener('submit', function (event) {
         event.preventDefault();
@@ -14,14 +13,31 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                window.location.href = '../list_areas.html';
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Área agregada',
+                    text: 'El área se ha agregado correctamente.',
+                    confirmButtonText: 'Aceptar'
+                }).then(() => {
+                    window.location.href = '../list_areas.html'; // Redirige tras el éxito
+                });
             } else {
-                errorMessage.textContent = data.error || 'Error al agregar el área.';  
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: data.error || 'Error al agregar el área.',
+                    confirmButtonText: 'Aceptar'
+                });
             }
         })
         .catch(error => {
-            errorMessage.textContent = 'Error en la conexión con el servidor.';
             console.error('Error al agregar área:', error.message);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error de conexión',
+                text: 'No se pudo conectar con el servidor para agregar el área.',
+                confirmButtonText: 'Aceptar'
+            });
         });
     });
 });

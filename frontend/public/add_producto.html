@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Producto</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.1/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/add_producto.css">
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center mb-4"><i class="fas fa-box"></i> Agregar Nuevo Producto</h2>
+        <form id="add-producto-form">
+            <div class="form-group">
+                <label for="nombre"><i class="fas fa-tag"></i> Nombre del Producto:</label>
+                <input type="text" class="form-control" id="nombre" required>
+            </div>
+
+            <div class="form-group">
+                <label for="categoria"><i class="fas fa-th-large"></i> Categoría:</label>
+                <select class="form-control" id="categoria" required>
+                    <!-- Las opciones de categoría se cargarán dinámicamente -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="marca"><i class="fas fa-industry"></i> Marca:</label>
+                <select class="form-control" id="marca" required>
+                    <!-- Las opciones de marca se cargarán dinámicamente -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="precio_costo"><i class="fas fa-money-bill-wave"></i> Precio de Costo:</label>
+                <input type="number" class="form-control" id="precio_costo" step="0.01" required>
+            </div>
+
+            <div class="form-group">
+                <label for="precio_venta"><i class="fas fa-money-check-alt"></i> Precio de Venta:</label>
+                <input type="number" class="form-control" id="precio_venta" step="0.01" required>
+            </div>
+
+            <div class="form-group">
+                <label for="fecha_adquisicion"><i class="fas fa-calendar-alt"></i> Fecha de Adquisición:</label>
+                <input type="date" class="form-control" id="fecha_adquisicion" required>
+            </div>
+
+            <div class="form-group">
+                <label for="garantia"><i class="fas fa-check-circle"></i> Garantía:</label>
+                <select class="form-control" id="garantia" required>
+                    <option value="S">Sí</option>
+                    <option value="N">No</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="existencia"><i class="fas fa-boxes"></i> Existencia:</label>
+                <input type="number" class="form-control" id="existencia" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-plus"></i> Agregar Producto</button>
+            <div id="error-message" class="alert alert-danger d-none mt-3"></div>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.1/dist/sweetalert2.all.min.js"></script>
+    <script src="./js/add_producto.js"></script>
+    <script src="js/validar.js"></script>
+    <script src="js/ventanaAviso.js"></script>
+    <script>inicializarAut()</script>
+</body>
+</html>

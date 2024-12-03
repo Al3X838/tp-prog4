@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function () {
         fetch(apiUrl, { method: 'GET' })
             .then(response => response.json())
             .then(data => {
-                // Ajuste para acceder a data.marcas en lugar de data
                 if (data.success && data.marcas) {
                     marcasList.innerHTML = data.marcas.map(marca => `
                         <tr>
@@ -19,13 +18,21 @@ document.addEventListener('DOMContentLoaded', function () {
                         </tr>
                     `).join('');
                 } else {
-                    document.getElementById('error-message').style.display = 'block';
-                    document.getElementById('error-message').innerText = 'Error al cargar las marcas.';
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Error al cargar las marcas.',
+                        confirmButtonText: 'Aceptar'
+                    });
                 }
             })
             .catch(error => {
-                document.getElementById('error-message').style.display = 'block';
-                document.getElementById('error-message').innerText = 'Error al cargar las marcas.';
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error en la conexión con el servidor.',
+                    confirmButtonText: 'Aceptar'
+                });
             });
     }
 
@@ -34,9 +41,20 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     window.confirmDelete = function (id) {
-        if (confirm('¿Estás seguro de que quieres eliminar esta marca?')) {
-            deleteMarca(id, loadMarcas);
-        }
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Esta acción eliminará la marca de forma permanente.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteMarca(id, loadMarcas);
+            }
+        });
     };
 
     function deleteMarca(id, callback) {
@@ -44,13 +62,29 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Éxito',
+                        text: 'La marca fue eliminada exitosamente.',
+                        confirmButtonText: 'Aceptar'
+                    });
                     callback();
                 } else {
-                    alert(data.error || 'Error al eliminar la marca.');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.error || 'Error al eliminar la marca.',
+                        confirmButtonText: 'Aceptar'
+                    });
                 }
             })
             .catch(error => {
-                alert('Error en la conexión con el servidor.');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error en la conexión con el servidor.',
+                    confirmButtonText: 'Aceptar'
+                });
                 console.error('Error al eliminar la marca:', error);
             });
     }

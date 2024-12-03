@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('add-categoria-form');
-    const errorMessage = document.getElementById('error-message');
 
     form.addEventListener('submit', function (event) {
         event.preventDefault();
@@ -14,14 +13,31 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                window.location.href = '../list_categorias.html';
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Categoría agregada',
+                    text: 'La categoría se ha agregado correctamente.',
+                    confirmButtonText: 'Aceptar'
+                }).then(() => {
+                    window.location.href = '../list_categorias.html'; // Redirige tras el éxito
+                });
             } else {
-                errorMessage.textContent = data.error || 'Error al agregar la categoria.';  // 
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: data.error || 'Error al agregar la categoría.',
+                    confirmButtonText: 'Aceptar'
+                });
             }
         })
         .catch(error => {
-            errorMessage.textContent = 'Error en la conexión con el servidor.';
-            console.error('Error al agregar la categoria:', error.message);
+            console.error('Error al agregar la categoría:', error.message);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error de conexión',
+                text: 'No se pudo conectar con el servidor para agregar la categoría.',
+                confirmButtonText: 'Aceptar'
+            });
         });
     });
 });

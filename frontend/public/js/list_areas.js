@@ -1,13 +1,14 @@
 document.addEventListener('DOMContentLoaded', function () {
     const apiUrl = '/areas'; // define la URL 
     const areasList = document.getElementById('areas-list');
+    const errorMessage = document.getElementById('error-message');
 
+    // Función para cargar las áreas
     function loadAreas() {
         fetch(apiUrl, { method: 'GET' })
             .then(response => response.json())
             .then(data => {
-                 // Ajuste para acceder a data.areas en lugar de data
-                 if (data.success && data.areas) {
+                if (data.success && data.areas) {
                     areasList.innerHTML = data.areas.map(area => `
                         <tr>
                             <td>${area.AREA}</td>
@@ -18,42 +19,85 @@ document.addEventListener('DOMContentLoaded', function () {
                             </td>
                         </tr>
                     `).join('');
+                    errorMessage.style.display = 'none'; // Oculta el mensaje de error si la carga es exitosa
                 } else {
-                    document.getElementById('error-message').style.display = 'block';
-                    document.getElementById('error-message').innerText = 'Error al cargar las áreas.';
+                    showError('Error al cargar las áreas.');
                 }
             })
             .catch(error => {
-                document.getElementById('error-message').style.display = 'block';
-                document.getElementById('error-message').innerText = 'Error al cargar las áreas.'; 
+                console.error('Error al cargar las áreas:', error);
+                showError('Error en la conexión con el servidor.');
             });
     }
 
+    // Función para mostrar errores con SweetAlert2
+    function showError(message) {
+        errorMessage.style.display = 'block';
+        errorMessage.innerText = message;
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: message,
+            confirmButtonText: 'Aceptar'
+        });
+    }
+
+    // Función para redirigir a la página de actualización
     window.editArea = function (id) {
         window.location.href = `upd_area.html?id=${id}`;
     };
 
+    // Función para confirmar eliminación usando SweetAlert2
     window.confirmDelete = function (id) {
-        if (confirm('¿Estás seguro de que quieres eliminar esta área?')) {
-            deleteArea(id, loadAreas);
-        }
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'No podrás recuperar esta área si la eliminas.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteArea(id, loadAreas);
+            }
+        });
     };
 
+    // Función para eliminar un área
     function deleteArea(id, callback) {
         fetch(`${apiUrl}/delete/${id}`, { method: 'DELETE' })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    callback();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Área eliminada',
+                        text: 'El área fue eliminada exitosamente.',
+                        confirmButtonText: 'Aceptar'
+                    });
+                    callback(); // Recargar las áreas después de eliminar
                 } else {
-                    alert(data.error || 'Error al eliminar el área.'); 
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.error || 'Error al eliminar el área.',
+                        confirmButtonText: 'Aceptar'
+                    });
                 }
             })
             .catch(error => {
-                alert('Error en la conexión con el servidor.');
                 console.error('Error al eliminar área:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error de conexión',
+                    text: 'No se pudo conectar con el servidor para eliminar el área.',
+                    confirmButtonText: 'Aceptar'
+                });
             });
     }
 
+    // Cargar las áreas al iniciar
     loadAreas();
 });

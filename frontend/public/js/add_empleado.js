@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Cargar lista de países
     const loadCountries = () => {
-        fetch('/paises/') // Asegúrate de que la URL está alineada con el microservicio
+        fetch('/paises/')
             .then(response => {
                 if (!response.ok) throw new Error('Network response was not ok');
                 return response.json();
@@ -18,21 +18,34 @@ document.addEventListener('DOMContentLoaded', function () {
                         paisSelect.appendChild(option);
                     });
                 } else {
-                    alert(data.error || 'Error al cargar la lista de países.');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.error || 'Error al cargar la lista de países.',
+                        confirmButtonText: 'Aceptar'
+                    });
                 }
             })
-            .catch(error => console.error('Error al cargar países:', error));
+            .catch(error => {
+                console.error('Error al cargar países:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error de conexión',
+                    text: 'No se pudo conectar con el servidor para cargar la lista de países.',
+                    confirmButtonText: 'Aceptar'
+                });
+            });
     };
 
     // Cargar lista de áreas
     const loadAreas = () => {
-        fetch('/areas/') // Asegúrate de que la URL está alineada con el microservicio
+        fetch('/areas/')
             .then(response => {
                 if (!response.ok) throw new Error('Network response was not ok');
                 return response.json();
             })
             .then(data => {
-               if (data.success) {
+                if (data.success) {
                     const areaSelect = document.getElementById('area');
                     data.areas.forEach(area => {
                         const option = document.createElement('option');
@@ -41,11 +54,22 @@ document.addEventListener('DOMContentLoaded', function () {
                         areaSelect.appendChild(option);
                     });
                 } else {
-                    alert(data.error || 'Error al cargar la lista de áreas.');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.error || 'Error al cargar la lista de áreas.',
+                        confirmButtonText: 'Aceptar'
+                    });
                 }
             })
             .catch(error => {
-                console.error("Error al cargar áreas:", error); // Muestra el error en la consola
+                console.error('Error al cargar áreas:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error de conexión',
+                    text: 'No se pudo conectar con el servidor para cargar la lista de áreas.',
+                    confirmButtonText: 'Aceptar'
+                });
             });
     };
 
@@ -56,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Procesar el formulario
     form.addEventListener('submit', function (event) {
         event.preventDefault();
-        
+
         const empleadoData = {
             nombre: document.getElementById('nombre').value.trim(),
             apellido: document.getElementById('apellido').value.trim(),
@@ -78,14 +102,31 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                window.location.href = '/list_empleados.html';
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Empleado agregado',
+                    text: 'El empleado se ha agregado correctamente.',
+                    confirmButtonText: 'Aceptar'
+                }).then(() => {
+                    window.location.href = '/list_empleados.html'; // Redirige después de la confirmación
+                });
             } else {
-                alert(data.error || 'Error al agregar el empleado.');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: data.error || 'Error al agregar el empleado.',
+                    confirmButtonText: 'Aceptar'
+                });
             }
         })
         .catch(error => {
-            alert('Error en la conexión con el servidor.');
             console.error('Error al agregar empleado:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error de conexión',
+                text: 'No se pudo conectar con el servidor para agregar el empleado.',
+                confirmButtonText: 'Aceptar'
+            });
         });
     });
 });

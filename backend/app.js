@@ -12,7 +12,7 @@ const proveedoresRouter = require('./routes/proveedores');
 const productosRouter = require('./routes/productos'); 
 const autenticarToken = require('./routes/autenticacion'); 
 
-
+    
 const app = express();
 const PORT = 3000;
 
@@ -105,6 +105,12 @@ app.get('/upd_proveedor',autenticarToken, (req, res) => {
 app.get('/list_productos',autenticarToken, (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/public/list_productos.html'));
 });
+
+app.get('/add_producto',autenticarToken, (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/public/add_producto.html'));
+});
+
+
 
 // Rutas de microservicios
 app.use('/connect', connectRouter);

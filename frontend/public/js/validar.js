@@ -1,6 +1,6 @@
 async function checkearAut() {
     const token = localStorage.getItem('authToken'); // obtiene el token del almacenamiento local
-    console.log('token: ', token); // ver si hay token
+    //console.log('token: ', token); // ver si hay token
 
     if (!token || token == null) {
         mostrarVentana("Debes iniciar sesión para continuar.",1);
@@ -45,9 +45,29 @@ async function checkearAut() {
 
 
 function logout() {
-    localStorage.removeItem('authToken'); // Eliminar el token del localStorage
-    window.location.href = '/login.html'; // Redirigir al login
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: '¿Quieres cerrar sesión?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, cerrar sesión',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Si el usuario confirma, elimina el token y redirige
+            localStorage.removeItem('authToken'); // Eliminar el token del localStorage
+            window.location.href = '/login.html'; // Redirigir al login
+            Swal.fire(
+                '¡Sesión cerrada!',
+                'Has cerrado sesión con éxito.',
+                'success'
+            );
+        }
+    });
 }
+
 
 
 

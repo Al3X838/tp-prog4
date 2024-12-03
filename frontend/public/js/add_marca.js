@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('add-marca-form');
-    const errorMessage = document.getElementById('error-message');
 
     form.addEventListener('submit', function (event) {
         event.preventDefault();
@@ -14,14 +13,31 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                window.location.href = '../list_marcas.html';
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Marca agregada',
+                    text: 'La marca se ha agregado correctamente.',
+                    confirmButtonText: 'Aceptar'
+                }).then(() => {
+                    window.location.href = '../list_marcas.html'; // Redirige después de cerrar la alerta
+                });
             } else {
-                errorMessage.textContent = data.error || 'Error al agregar la marca.';
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: data.error || 'Error al agregar la marca.',
+                    confirmButtonText: 'Aceptar'
+                });
             }
         })
         .catch(error => {
-            errorMessage.textContent = 'Error en la conexión con el servidor.';
             console.error('Error al agregar marca:', error.message);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error de conexión',
+                text: 'No se pudo conectar con el servidor. Por favor, inténtalo de nuevo.',
+                confirmButtonText: 'Aceptar'
+            });
         });
     });
 });

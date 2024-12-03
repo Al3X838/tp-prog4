@@ -6,8 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
         fetch(apiUrl, { method: 'GET' })
             .then(response => response.json())
             .then(data => {
-                 // Ajuste para acceder a data.paises en lugar de data
-                 if (data.success && data.paises) {
+                if (data.success && data.paises) {
                     paisesList.innerHTML = data.paises.map(pais => `
                         <tr>
                             <td>${pais.PAIS}</td>
@@ -19,13 +18,21 @@ document.addEventListener('DOMContentLoaded', function () {
                         </tr>
                     `).join('');
                 } else {
-                    document.getElementById('error-message').style.display = 'block';
-                    document.getElementById('error-message').innerText = 'Error al cargar las áreas.';
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Error al cargar los países.',
+                        confirmButtonText: 'Aceptar'
+                    });
                 }
             })
             .catch(error => {
-                document.getElementById('error-message').style.display = 'block';
-                document.getElementById('error-message').innerText = 'Error al cargar las áreas.';  // *** MODIFICACIÓN ***
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error en la conexión con el servidor.',
+                    confirmButtonText: 'Aceptar'
+                });
             });
     }
 
@@ -34,9 +41,20 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     window.confirmDelete = function (id) {
-        if (confirm('¿Estás seguro de que quieres eliminar este pais?')) {
-            deletePais(id, loadPaises);
-        }
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Esta acción eliminará el país de forma permanente.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deletePais(id, loadPaises);
+            }
+        });
     };
 
     function deletePais(id, callback) {
@@ -44,14 +62,30 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Éxito',
+                        text: 'El país fue eliminado exitosamente.',
+                        confirmButtonText: 'Aceptar'
+                    });
                     callback();
                 } else {
-                    alert(data.error || 'Error al eliminar el área.');  // *** MODIFICACIÓN ***
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.error || 'Error al eliminar el país.',
+                        confirmButtonText: 'Aceptar'
+                    });
                 }
             })
             .catch(error => {
-                alert('Error en la conexión con el servidor.');
-                console.error('Error al eliminar área:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error en la conexión con el servidor.',
+                    confirmButtonText: 'Aceptar'
+                });
+                console.error('Error al eliminar el país:', error);
             });
     }
 

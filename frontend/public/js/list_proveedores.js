@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const proveedorList = document.getElementById('proveedores-list'); // aca se va a mostrar todo (id del tbody )
+    const proveedorList = document.getElementById('proveedores-list'); // Aquí se va a mostrar todo (id del tbody)
    
     function loadProveedores() {
-        fetch('/proveedores', { method: 'GET' }) // solicita al sevidor para obtener los empleados
+        fetch('/proveedores', { method: 'GET' }) // Solicita al servidor para obtener los proveedores
             .then(response => response.json())
             .then(data => {
 
@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log(data);
 
                 if (data.success !== false) {
-                                            // recorre cada empleado en el array y genera el <tr> (table row)
+                    // Recorre cada proveedor en el array y genera el <tr> (table row)
                     proveedorList.innerHTML = proveedores.map(proveedor => `
                         <tr>
                             <td>${proveedor.PROVEEDOR}</td>
@@ -22,59 +22,81 @@ document.addEventListener('DOMContentLoaded', function () {
                             <td>
                                 <button class="btn btn-primary" onclick="editProveedor(${proveedor.PROVEEDOR})">Actualizar</button>
                                 <button class="btn btn-danger" onclick="confirmDelete(${proveedor.PROVEEDOR})">Eliminar</button>
-                                
                             </td>
                         </tr>
-                        
                     `).join('');
                 } else {
-                    alert(data.error || 'Error al cargar empleados.');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.error || 'Error al cargar proveedores.',
+                        confirmButtonText: 'Aceptar'
+                    });
                 }
             })
             .catch(error => {
-                alert('Error en la conexión con el servidor.');
-                console.error('Error al cargar empleados:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error en la conexión con el servidor.',
+                    confirmButtonText: 'Aceptar'
+                });
+                console.error('Error al cargar proveedores:', error);
             });
     }
 
-    /*
-    window.mostrarDetalles = function (id) {
-        const detalles = document.getElementById(`detalles${id}`);
-        if (detalles.classList.contains('d-none')) {
-            detalles.classList.remove('d-none'); // Mostrar detalles
-        } else {
-            detalles.classList.add('d-none'); // Ocultar detalles
-        }
-    };
-    */
-
-
-    window.editProveedor = function (id) { 
+    window.editProveedor = function (id) {
         window.location.href = `upd_proveedor.html?id=${id}`;
     };
 
     window.confirmDelete = function (id) {
-        if (confirm('¿Estás seguro de que quieres eliminar este proveedor?')) {
-            deleteProveedor(id, loadProveedores);
-
-        }
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Esta acción eliminará al proveedor de forma permanente.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteProveedor(id, loadProveedores);
+            }
+        });
     };
 
     function deleteProveedor(id, callback) {
-        fetch(`/proveedores/delete/${id}`, { method: 'DELETE' }) // solicitud htpp
+        fetch(`/proveedores/delete/${id}`, { method: 'DELETE' }) // Solicitud HTTP
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    callback(); // recarga la lista
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Éxito',
+                        text: 'El proveedor fue eliminado exitosamente.',
+                        confirmButtonText: 'Aceptar'
+                    });
+                    callback(); // Recarga la lista
                 } else {
-                    alert(data.error || 'Error al eliminar el empleado.');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.error || 'Error al eliminar el proveedor.',
+                        confirmButtonText: 'Aceptar'
+                    });
                 }
             })
             .catch(error => {
-                alert('Error en la conexión con el servidor.');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error en la conexión con el servidor.',
+                    confirmButtonText: 'Aceptar'
+                });
                 console.error('Error al eliminar proveedor:', error);
             });
     }
 
-    loadProveedores(); // carga la pagina
+    loadProveedores(); // Carga la página
 });

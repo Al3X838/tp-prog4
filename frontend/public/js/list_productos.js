@@ -36,7 +36,13 @@ document.addEventListener('DOMContentLoaded', function () {
                         </tr>
                     `).join(''); // Une las filas generadas en un solo bloque HTML
                 } else {
-                    alert(data.error || 'Error al cargar productos.');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.error || 'Error al agregar el procucto.',
+                        confirmButtonText: 'Aceptar'
+                    });
+                    
                 }
             })
             .catch(error => {
@@ -62,9 +68,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Función para confirmar eliminación de un producto
     window.confirmDelete = function (id) {
-        if (confirm('¿Estás seguro de que quieres eliminar este producto?')) {
-            deleteProducto(id, loadProductos); // Llama a la función de eliminación
-        }
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'No podrás revertir esta acción.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteProducto(id, loadProductos); // Llama a la función que elimina el producto
+            }
+        });
+        
     };
 
     // Función para eliminar un producto
@@ -79,7 +97,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             })
             .catch(error => {
-                alert('Error en la conexión con el servidor.');
+                Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text:'Error de la base de datos.',
+                        confirmButtonText: 'Aceptar'
+                    });
                 console.error('Error al eliminar producto:', error);
             });
     }

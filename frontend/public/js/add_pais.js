@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('add-pais-form');
-    const errorMessage = document.getElementById('error-message');
 
     form.addEventListener('submit', function (event) {
         event.preventDefault();
@@ -14,14 +13,31 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                window.location.href = '../list_paises.html';
+                Swal.fire({
+                    icon: 'success',
+                    title: 'País agregado',
+                    text: 'El país se ha agregado correctamente.',
+                    confirmButtonText: 'Aceptar'
+                }).then(() => {
+                    window.location.href = '../list_paises.html'; // Redirige después de cerrar el mensaje
+                });
             } else {
-                errorMessage.textContent = data.error || 'Error al agregar el pais.';  // *** MODIFICACIÓN ***
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: data.error || 'Error al agregar el país.',
+                    confirmButtonText: 'Aceptar'
+                });
             }
         })
         .catch(error => {
-            errorMessage.textContent = 'Error en la conexión con el servidor.';
-            console.error('Error al agregar el pais:', error.message);
+            console.error('Error al agregar el país:', error.message);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error de conexión',
+                text: 'No se pudo conectar con el servidor. Por favor, inténtalo de nuevo.',
+                confirmButtonText: 'Aceptar'
+            });
         });
     });
 });
