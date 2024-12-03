@@ -74,7 +74,7 @@ router.post('/update/:id', async (req, res) => {
     try {
         const connection = await getConnection();
         await connection.query(`
-            UPDATE EMPLEADOS SET NOMBRE = ?, DIRECCION = ?, PAIS = ?, TELEFONO = ?, EMAIL = ?, FECHA_INICIO = ?
+            UPDATE PROVEEDORES SET NOMBRE = ?, DIRECCION = ?, PAIS = ?, TELEFONO = ?, EMAIL = ?, FECHA_INICIO = ?
             WHERE PROVEEDOR = ?`,
             [nombre, direccion, pais, telefono, email, fecha_inicio, id]
         );

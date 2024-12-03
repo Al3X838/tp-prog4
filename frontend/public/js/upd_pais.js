@@ -17,11 +17,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (data.success && data.pais) {
                     paisNameInput.value = data.pais.NOMBRE;
                 } else {
-                    errorMessage.textContent = 'No se encontró el pais.'; 
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'No se encontró el país.'
+                    });
                 }
             })
             .catch(error => {
-                errorMessage.textContent = 'Error al obtener el pais.';
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error al obtener el país.'
+                });
+                console.error('Error:', error);
             });
     }
 
@@ -36,17 +45,29 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(response => response.json())
         .then(data => {
-            console.log('respuesta upd_pais', response);
             if (data.success) {
-                console.log(response.status);
-                window.location.href = '/list_paises.html';
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Actualizado!',
+                    text: 'El país ha sido actualizado correctamente.'
+                }).then(() => {
+                    window.location.href = '../list_paises.html'; // Redirige a la lista de países
+                });
             } else {
-                errorMessage.textContent = data.error || 'Error al actualizar el paises.';  // *** MODIFICACIÓN ***
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: data.error || 'Error al actualizar el país.'
+                });
             }
         })
         .catch(error => {
-            errorMessage.textContent = 'Error en la conexión con el servidor.';
-            console.error('Error al actualizar el pais:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error en la conexión con el servidor.'
+            });
+            console.error('Error al actualizar el país:', error);
         });
     });
 });

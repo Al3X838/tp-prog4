@@ -1,44 +1,36 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const form = document.getElementById('update-empleado-form'); //update-empleado-form es donde se van a enviar los datos actualizados
-    const urlParams = new URLSearchParams(window.location.search); // busca la URL. Esto es lo que dps aparece como upd_empleado.html?id=12
-    const empleadoId = urlParams.get('id'); // toma el valor del id correspondiente
+    const form = document.getElementById('update-empleado-form');
+    const urlParams = new URLSearchParams(window.location.search);
+    const empleadoId = urlParams.get('id');
 
     // Método para cargar la lista de países
     const loadCountries = () => {
-        fetch('/paises/') // hace la solicitud del http get
+        fetch('/paises/')
             .then(response => {
                 if (!response.ok) throw new Error('Network response was not ok');
-                return response.json(); // convierte la respuesta del servidor en un objeto de javaScript
+                return response.json();
             })
             .then(data => {
-                if (data.success) { // procesa los datos 👌
-                    const paisSelect = document.getElementById('pais'); // busca <select> con el id de pais
-                    data.paises.forEach(pais => { // itera cada pais recibido
-                        const option = document.createElement('option'); // crea la etiqueta option
-                        option.value = pais.PAIS; // asigna los valores al atributo
-                        option.textContent = pais.NOMBRE + '('+ pais.PAIS +')'; // asigna el nomrbre como texto visible
-                        paisSelect.appendChild(option); // agrega el option al select
+                if (data.success) {
+                    const paisSelect = document.getElementById('pais');
+                    data.paises.forEach(pais => {
+                        const option = document.createElement('option');
+                        option.value = pais.PAIS;
+                        option.textContent = pais.NOMBRE + '(' + pais.PAIS + ')';
+                        paisSelect.appendChild(option);
                     });
                 } else {
-                    alert(data.error || 'Error al cargar la lista de países.');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.error || 'Error al cargar la lista de países.'
+                    });
                 }
             })
-            .catch(error => console.error('Error al cargar países:', error)); // una especie de try catch (creo)
+            .catch(error => console.error('Error al cargar países:', error));
     };
 
-    /*{
-    "success": true,
-    "paises": [
-        { "PAIS": 1, "NOMBRE": "Estados Unidos" },
-        { "PAIS": 2, "NOMBRE": "México" },
-        { "PAIS": 3, "NOMBRE": "España" }
-        ]
-    }*/
-
-
-
     // Método para cargar la lista de áreas
-    // pasa lo mismo quearriba
     const loadAreas = () => {
         fetch('/areas/')
             .then(response => {
@@ -51,22 +43,26 @@ document.addEventListener('DOMContentLoaded', function () {
                     data.areas.forEach(area => {
                         const option = document.createElement('option');
                         option.value = area.AREA;
-                        option.textContent = area.NOMBRE + '('+ area.AREA +')';
+                        option.textContent = area.NOMBRE + '(' + area.AREA + ')';
                         areaSelect.appendChild(option);
                     });
                 } else {
-                    alert(data.error || 'Error al cargar la lista de áreas.');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.error || 'Error al cargar la lista de áreas.'
+                    });
                 }
             })
             .catch(error => console.error('Error al cargar áreas:', error));
     };
 
-    // Llama a la funcion y Carga listas al inicio
+    // Llama a la función para cargar listas al inicio
     loadCountries();
     loadAreas();
 
     // Cargar datos del empleado actual
-    if (empleadoId) { // verifica si existe 
+    if (empleadoId) {
         fetch(`/empleados/empleado/${empleadoId}`, { method: 'GET' })
             .then(response => response.json())
             .then(data => {
@@ -83,20 +79,27 @@ document.addEventListener('DOMContentLoaded', function () {
                     document.getElementById('fecha_salida').value = data.empleado.FECHA_SALIDA;
                     document.getElementById('salario').value = data.empleado.SALARIO;
                 } else {
-                    alert(data.error || 'Empleado no encontrado.');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.error || 'Empleado no encontrado.'
+                    });
                 }
             })
             .catch(error => {
-                alert('Error al obtener datos del empleado.');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error al obtener datos del empleado.'
+                });
                 console.error('Error:', error);
             });
     }
 
-
     form.addEventListener('submit', function (event) {
-        event.preventDefault(); // evita que el formulario recargue la pagina
-        
-        const updatedEmpleadoData = { // recopila los datos del formulario
+        event.preventDefault();
+
+        const updatedEmpleadoData = {
             nombre: document.getElementById('nombre').value.trim(),
             apellido: document.getElementById('apellido').value.trim(),
             direccion: document.getElementById('direccion').value.trim(),
@@ -108,9 +111,8 @@ document.addEventListener('DOMContentLoaded', function () {
             fecha_salida: document.getElementById('fecha_salida').value || null,
             salario: document.getElementById('salario').value
         };
-        console.log('apellido', apellido);
-        
-        fetch(`/empleados/update/${empleadoId}`, { // envia los datos al servidor
+
+        fetch(`/empleados/update/${empleadoId}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updatedEmpleadoData)
@@ -118,13 +120,27 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                window.location.href = '/list_empleados.html'; // te redirige a la pagina de empleados
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Actualizado!',
+                    text: 'El empleado ha sido actualizado correctamente.'
+                }).then(() => {
+                    window.location.href = '/list_empleados.html'; // Redirige a la página de empleados
+                });
             } else {
-                alert(data.error || 'Error al actualizar el empleado.');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: data.error || 'Error al actualizar el empleado.'
+                });
             }
         })
         .catch(error => {
-            alert('Error en la conexión con el servidor.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error en la conexión con el servidor.'
+            });
             console.error('Error al actualizar empleado:', error);
         });
     });

@@ -17,11 +17,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (data.success && data.marca) {
                     marcaNameInput.value = data.marca.NOMBRE;
                 } else {
-                    errorMessage.textContent = 'No se encontró la marca.';
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'No se encontró la marca.'
+                    });
                 }
             })
             .catch(error => {
-                errorMessage.textContent = 'Error al obtener la marca.';
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error al obtener la marca.'
+                });
+                console.error('Error:', error);
             });
     }
 
@@ -37,13 +46,27 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                window.location.href = '/list_marcas.html';
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Actualizado!',
+                    text: 'La marca ha sido actualizada correctamente.'
+                }).then(() => {
+                    window.location.href = '/list_marcas.html'; // Redirige a la página de marcas
+                });
             } else {
-                errorMessage.textContent = data.error || 'Error al actualizar la marca.';
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: data.error || 'Error al actualizar la marca.'
+                });
             }
         })
         .catch(error => {
-            errorMessage.textContent = 'Error en la conexión con el servidor.';
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error en la conexión con el servidor.'
+            });
             console.error('Error al actualizar marca:', error);
         });
     });

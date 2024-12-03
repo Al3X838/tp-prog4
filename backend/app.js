@@ -10,9 +10,10 @@ const categoriasRouter = require('./routes/categorias');
 const marcasRouter = require('./routes/marcas');
 const proveedoresRouter = require('./routes/proveedores'); 
 const productosRouter = require('./routes/productos'); 
+const comprasRouter = require('./routes/compras'); 
 const autenticarToken = require('./routes/autenticacion'); 
 
-    
+
 const app = express();
 const PORT = 3000;
 
@@ -110,6 +111,14 @@ app.get('/add_producto',autenticarToken, (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/public/add_producto.html'));
 });
 
+app.get('/upd_producto',autenticarToken, (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/public/upd_producto.html'));
+});
+
+app.get('/list_compras',autenticarToken, (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/public/list_compras.html'));
+});
+
 
 
 // Rutas de microservicios
@@ -121,6 +130,7 @@ app.use('/categorias', categoriasRouter); // Ruta para países
 app.use('/marcas', marcasRouter);
 app.use('/proveedores', proveedoresRouter);
 app.use('/productos', productosRouter);
+app.use('/compras', comprasRouter);
 
 
 // Inicia el servidor

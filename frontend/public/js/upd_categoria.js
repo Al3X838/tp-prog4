@@ -17,11 +17,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (data.success && data.categoria) {
                     categoriaNameInput.value = data.categoria.NOMBRE;
                 } else {
-                    errorMessage.textContent = 'No se encontró la categoria.';  // *** MODIFICACIÓN ***
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'No se encontró la categoría.'
+                    });
                 }
             })
             .catch(error => {
-                errorMessage.textContent = 'Error al obtener la categoria.';
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error al obtener la categoría.'
+                });
             });
     }
 
@@ -37,14 +45,28 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                window.location.href = '/list_categorias.html';
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Actualizado!',
+                    text: 'La categoría ha sido actualizada correctamente.'
+                }).then(() => {
+                    window.location.href = '/list_categorias.html';
+                });
             } else {
-                errorMessage.textContent = data.error || 'Error al actualizar la categoria.';  // *** MODIFICACIÓN ***
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: data.error || 'Error al actualizar la categoría.'
+                });
             }
         })
         .catch(error => {
-            errorMessage.textContent = 'Error en la conexión con el servidor.';
-            console.error('Error al actualizar la categoria:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error en la conexión con el servidor.'
+            });
+            console.error('Error al actualizar la categoría:', error);
         });
     });
 });

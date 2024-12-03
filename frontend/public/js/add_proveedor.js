@@ -47,6 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
             pais: document.getElementById('pais').value,
             telefono: document.getElementById('telefono').value.trim(),
             email: document.getElementById('email').value.trim(),
+            fecha: document.getElementById('fecha_inicio').value.trim(),
         };
 
         fetch('/proveedores/add', {
