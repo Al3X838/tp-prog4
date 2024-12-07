@@ -5,7 +5,7 @@ async function checkearAut() {
     if (!token || token == null) {
         mostrarVentana("Debes iniciar sesión para continuar.",1);
         setTimeout(() => {
-            window.location.href = '/login.html';}, 3000); // espera 3 segiundos        
+            window.location.href = '/login.html';}, 2000); // espera 3 segiundos        
         return;
     }
     try {

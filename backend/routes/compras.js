@@ -55,15 +55,15 @@ router.get('/compra/:id', async (req, res) => {
         const connection = await getConnection();
         const result = await connection.query(`SELECT
             COMPRAS.COMPRA,
-            COMPRAS.PRODUCTO AS PRODUCTO_ID,,
+            COMPRAS.PRODUCTO AS PRODUCTO_ID,
             PRODUCTOS.NOMBRE AS PRODUCTO_NOMBRE,
             COMPRAS.EMPLEADO AS EMPLEADO_ID,
             EMPLEADOS.NOMBRE AS EMPLEADO_NOMBRE,
             COMPRAS.FECHA,
             COMPRAS.CANTIDAD,
-            COMPRAS.PRECIO_COSTO
+            COMPRAS.PRECIO_COSTO,
             COMPRAS.PROVEEDOR AS PROVEEDOR_ID,
-            PROVEEDORES.NOMBRE AS PROVEEDOR_NOMBRE,
+            PROVEEDORES.NOMBRE AS PROVEEDOR_NOMBRE
             FROM COMPRAS
             JOIN PRODUCTOS ON COMPRAS.PRODUCTO = PRODUCTOS.PRODUCTO
             JOIN EMPLEADOS ON COMPRAS.EMPLEADO = EMPLEADOS.EMPLEADO
@@ -86,13 +86,14 @@ router.post('/add', async (req, res) => {
     const { producto, empleado, proveedor, fecha, cantidad, precio_costo } = req.body;
     try {
         const connection = await getConnection();
+        
         await connection.query(
             `INSERT INTO COMPRAS (PRODUCTO, EMPLEADO, PROVEEDOR, FECHA, CANTIDAD, PRECIO_COSTO)
-             VALUES (?, ?, ?, ?, ?)`,
+             VALUES (?, ?, ?, ?, ?, ?)`,
             [producto, empleado, proveedor, fecha, cantidad, precio_costo]
         );
         await connection.close();
-        res.json({ success: true, message: 'Compra agregada con éxito' });
+        res.json({ success: true});
     } catch (err) {
         handleDbError(err, res, 'adding compra');
     }

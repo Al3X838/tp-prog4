@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualizar Compra</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="css/add_compra.css">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.1/dist/sweetalert2.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center mb-4"><i class="fas fa-shopping-cart"></i> Actualizar Compra</h2>
+        <form id="update-compra-form">
+            <div class="form-group">
+                <label for="producto"><i class="fas fa-box"></i> Producto:</label>
+                <select class="form-control" id="producto" required>
+                    <!-- Aquí se cargarán los productos dinámicamente -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="empleado"><i class="fas fa-user"></i> Empleado:</label>
+                <select class="form-control" id="empleado" required>
+                    <!-- Aquí se cargarán los empleados dinámicamente -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="proveedor"><i class="fas fa-truck"></i> Proveedor:</label>
+                <select class="form-control" id="proveedor" required>
+                    <!-- Aquí se cargarán los proveedores dinámicamente -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="cantidad"><i class="fas fa-sort-numeric-up"></i> Cantidad:</label>
+                <input type="number" class="form-control" id="cantidad"  required>
+            </div>
+
+            <div class="form-group">
+                <label for="precio_compra"><i class="fas fa-dollar-sign"></i> Precio de Compra:</label>
+                <input type="number" class="form-control" id="precio_compra"  required>
+            </div>
+
+            <div class="form-group">
+                <label for="fecha_compra"><i class="fas fa-calendar-alt"></i> Fecha de Compra:</label>
+                <input type="date" class="form-control" id="fecha_compra" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-plus"></i> Actualizar Compra</button>
+            <div id="error-message" class="alert alert-danger d-none mt-3"></div>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.1/dist/sweetalert2.all.min.js"></script>
+    
+    <script src="./js/upd_compra.js"></script>
+    <script src="js/validar.js"></script>
+    <script src="js/ventanaAviso.js"></script>
+    <script>inicializarAut()</script>
+</body>
+</html>

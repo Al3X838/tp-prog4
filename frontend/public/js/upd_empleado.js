@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => response.json())
             .then(data => {
                 if (data.success && data.empleado) {
-                    console.log(data.empleado);
+                    
                     document.getElementById('nombre').value = data.empleado.NOMBRE;
                     document.getElementById('apellido').value = data.empleado.APELLIDO;
                     document.getElementById('direccion').value = data.empleado.DIRECCION;

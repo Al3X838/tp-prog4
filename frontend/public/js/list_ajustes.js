@@ -1,38 +1,41 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const comprasList = document.getElementById('compras-list'); // Aquí se mostrará todo (id del tbody)
+    const ajustesList = document.getElementById('ajustes-list'); // ID del tbody donde se mostrarán los ajustes
 
-    // Función para cargar las compras
-    function loadCompras() {
-        fetch('/compras', { method: 'GET' }) // Solicita al servidor las compras
+    function loadAjustes() {
+        fetch('/ajustes', { method: 'GET' }) // Solicita al servidor la lista de ajustes
             .then(response => response.json())
             .then(data => {
 
-                let compras = data.compras;
-                console.log(compras);
-                //console.log(data);
+                let ajustes = data.ajustes;
+                console.log(ajustes);
+                console.log(data);
 
                 if (data.success !== false) {
-                    // Recorre cada compra en el array y genera el <tr> (table row)
-                    comprasList.innerHTML = compras.map(compra => `
+                    // Recorre cada ajuste y genera el <tr> con detalles
+                    ajustesList.innerHTML = ajustes.map(ajuste => `
                         <tr>
-                            <td>${compra.COMPRA}</td>
-                            <td>${compra.PROVEEDOR_NOMBRE}</td>
-                            <td>${compra.FECHA}</td>
-                            <td>${compra.PRECIO_COSTO}</td>
+                            <td>${ajuste.AJUSTE}</td>
+                            <td>${ajuste.FECHA}</td>
+                            <td>${ajuste.TIPO_AJUSTE}</td>
+                            <td>${ajuste.PRODUCTO_NOMBRE}</td>
+                            <td>${ajuste.EMPLEADO_NOMBRE} ${ajuste.EMPLEADO_APELLIDO}</td>
+                            <td>${ajuste.CANTIDAD}</td>
                             <td>
-                                <button class="btn btn-primary" onclick="editCompra(${compra.COMPRA})">Actualizar</button>
-                                <button class="btn btn-danger" onclick="confirmDelete(${compra.COMPRA})">Eliminar</button>
-                                <button class="btn btn-info" onclick="mostrarDetalles(${compra.COMPRA})">Ver más</button>
+                                <button class="btn btn-primary" onclick="editAjuste(${ajuste.AJUSTE})">Actualizar</button>
+                                <button class="btn btn-danger" onclick="confirmDelete(${ajuste.AJUSTE})">Eliminar</button>
+                                <button class="btn btn-info" onclick="mostrarDetalles(${ajuste.AJUSTE})">Ver más</button>
                             </td>
                         </tr>
-                        <tr id="detalles${compra.COMPRA}" class="d-none bg-light">
-                            <td colspan="5">
+                        <tr id="detalles${ajuste.AJUSTE}" class="d-none bg-light">
+                            <td colspan="7">
                                 <div class="detalles-content p-3 border rounded shadow-sm">
                                     <div class="detalles-content">
-                                        <p><strong>Proveedor:</strong> ${compra.PROVEEDOR_NOMBRE} (${compra.PROVEEDOR_ID})</p>
-                                        <p><strong>Fecha:</strong> ${compra.FECHA}</p>
-                                        <p><strong>Productos:</strong>${compra.PRODUCTO_NOMBRE} (${compra.PRODUCTO_ID})</p>
-                                        <p><strong>Empleado:</strong> ${compra.EMPLEADO_NOMBRE} (${compra.EMPLEADO_ID})</p>
+                                        <p><strong>Producto:</strong> ${ajuste.PRODUCTO_NOMBRE} (${ajuste.PRODUCTO_ID})</p>
+                                        <p><strong>Empleado:</strong> ${ajuste.EMPLEADO_NOMBRE} ${ajuste.EMPLEADO_APELLIDO}</p>
+                                        <p><strong>Fecha:</strong> ${ajuste.FECHA}</p>
+                                        <p><strong>Tipo de Ajuste:</strong> ${ajuste.TIPO_AJUSTE}</p>
+                                        <p><strong>Cantidad:</strong> ${ajuste.CANTIDAD}</p>
+                                        <p><strong>Precio Costo:</strong> ${ajuste.PRECIO_COSTO}</p>
                                     </div>
                                 </div>
                             </td>
@@ -42,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: data.error || 'Error al cargar las compras.',
+                        text: data.error || 'Error al cargar ajustes.',
                         confirmButtonText: 'Aceptar'
                     });
                 }
@@ -54,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     text: 'Error en la conexión con el servidor.',
                     confirmButtonText: 'Aceptar'
                 });
-                console.error('Error al cargar las compras:', error);
+                console.error('Error al cargar ajustes:', error);
             });
     }
 
@@ -67,14 +70,14 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 
-    window.editCompra = function (id) {
-        window.location.href = `upd_compra.html?id=${id}`;
+    window.editAjuste = function (id) {
+        window.location.href = `upd_ajuste.html?id=${id}`;
     };
 
     window.confirmDelete = function (id) {
         Swal.fire({
             title: '¿Estás seguro?',
-            text: 'Esta acción eliminará la compra de forma permanente.',
+            text: 'Esta acción eliminará el ajuste de forma permanente.',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -83,28 +86,28 @@ document.addEventListener('DOMContentLoaded', function () {
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                deleteCompra(id, loadCompras);
+                deleteAjuste(id, loadAjustes);
             }
         });
     };
 
-    function deleteCompra(id, callback) {
-        fetch(`/compras/delete/${id}`, { method: 'DELETE' })
+    function deleteAjuste(id, callback) {
+        fetch(`/ajustes/delete/${id}`, { method: 'DELETE' })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
                     Swal.fire({
                         icon: 'success',
                         title: 'Éxito',
-                        text: 'La compra fue eliminada exitosamente.',
+                        text: 'El ajuste fue eliminado exitosamente.',
                         confirmButtonText: 'Aceptar'
                     });
-                    callback(); // Recarga la lista de compras
+                    callback(); // Recarga la lista de ajustes
                 } else {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: data.error || 'Error al eliminar la compra.',
+                        text: data.error || 'Error al eliminar el ajuste.',
                         confirmButtonText: 'Aceptar'
                     });
                 }
@@ -116,9 +119,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     text: 'Error en la conexión con el servidor.',
                     confirmButtonText: 'Aceptar'
                 });
-                console.error('Error al eliminar la compra:', error);
+                console.error('Error al eliminar el ajuste:', error);
             });
     }
 
-    loadCompras(); // Carga la página con las compras
+    loadAjustes(); // Carga la página con los ajustes
 });

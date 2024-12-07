@@ -10,6 +10,16 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 if (data.success) {
                     const paisSelect = document.getElementById('pais');
+
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.textContent = 'Selecciona un Pais';
+                    defaultOption.selected = true;
+                    defaultOption.disabled = true;
+                    paisSelect.appendChild(defaultOption);
+
+
+
                     data.paises.forEach(pais => {
                         const option = document.createElement('option');
                         option.value = pais.PAIS;
@@ -48,7 +58,16 @@ document.addEventListener('DOMContentLoaded', function () {
             telefono: document.getElementById('telefono').value.trim(),
             email: document.getElementById('email').value.trim(),
             fecha: document.getElementById('fecha_inicio').value.trim(),
+
         };
+        console.log(provedorData);
+        console.log('tipo de dato nombre', typeof proveedorData.nombre);
+        console.log('tipo de dato direccion', typeof proveedorData.direccion);
+        console.log('tipo de dato pais', typeof proveedorData.pais);
+        console.log('tipo de dato telefono', typeof proveedorData.telefono);
+        console.log('tipo de dato email', typeof proveedorData.email);
+        console.log('tipo de dato fecha', typeof proveedorData.fecha);
+        
 
         fetch('/proveedores/add', {
             method: 'POST',

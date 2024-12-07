@@ -10,7 +10,8 @@ const categoriasRouter = require('./routes/categorias');
 const marcasRouter = require('./routes/marcas');
 const proveedoresRouter = require('./routes/proveedores'); 
 const productosRouter = require('./routes/productos'); 
-const comprasRouter = require('./routes/compras'); 
+const comprasRouter = require('./routes/compras');
+const ajustesRouter = require('./routes/ajustes'); 
 const autenticarToken = require('./routes/autenticacion'); 
 
 
@@ -119,6 +120,26 @@ app.get('/list_compras',autenticarToken, (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/public/list_compras.html'));
 });
 
+app.get('/add_compra',autenticarToken, (req, res) =>{
+    res.sendFile(path.join(__dirname, '../frontend/public/add_compra.html'));
+});
+
+app.get('/upd_compra',autenticarToken, (req, res) =>{
+    res.sendFile(path.join(__dirname, '../frontend/public/upd_compra.html'));
+});
+
+app.get('/list_ajustes',autenticarToken, (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/public/list_ajustes.html'));
+});
+
+app.get('/add_ajuste',autenticarToken, (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/public/add_ajuste.html'));
+});
+
+app.get('/upd_ajuste',autenticarToken, (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/public/upd_ajuste.html'));
+});
+
 
 
 // Rutas de microservicios
@@ -131,6 +152,8 @@ app.use('/marcas', marcasRouter);
 app.use('/proveedores', proveedoresRouter);
 app.use('/productos', productosRouter);
 app.use('/compras', comprasRouter);
+app.use('/ajustes', ajustesRouter);
+
 
 
 // Inicia el servidor

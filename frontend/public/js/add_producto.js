@@ -11,6 +11,14 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 if (data.success) {
                     const categoriaSelect = document.getElementById('categoria');
+                    /*
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.textContent = 'Selecciona una categoria';
+                    defaultOption.selected = true;
+                    defaultOption.disabled = true;
+                    categoriaSelect.appendChild(defaultOption);
+                    */
                     data.categorias.forEach(categoria => {
                         const option = document.createElement('option');
                         option.value = categoria.CATEGORIA;
@@ -47,6 +55,14 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 if (data.success) {
                     const marcaSelect = document.getElementById('marca');
+                    /*
+                    marcaSelect.appendChild(defaultOption);
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.textContent = 'Selecciona una marca';
+                    defaultOption.selected = true;
+                    defaultOption.disabled = true;
+                    */
                     data.marcas.forEach(marca => {
                         const option = document.createElement('option');
                         option.value = marca.MARCA;
@@ -92,6 +108,14 @@ document.addEventListener('DOMContentLoaded', function () {
             existencia: parseInt(document.getElementById('existencia').value) || 0,
         };
         console.log(productoData);
+        console.log('tipo nombre', typeof productoData.nombre);
+        console.log('tipo categoria', typeof productoData.categoria);
+        console.log('tipo marca', typeof productoData.marca);
+        console.log('tipo precio_costo', typeof productoData.precio_costo);
+        console.log('tipo precio_venta', typeof productoData.precio_venta);
+        console.log('tipo fecha_adquisicion', typeof productoData.fecha_adquisicion);
+        console.log('tipo garantia', typeof productoData.garantia);
+        console.log('tipo existencia', typeof productoData.existencia);
 
         fetch('/productos/add', {
             method: 'POST',

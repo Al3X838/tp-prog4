@@ -11,6 +11,14 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 if (data.success) {
                     const paisSelect = document.getElementById('pais');
+
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.textContent = 'Selecciona un Pais';
+                    defaultOption.selected = true;
+                    defaultOption.disabled = true;
+                    paisSelect.appendChild(defaultOption);
+
                     data.paises.forEach(pais => {
                         const option = document.createElement('option');
                         option.value = pais.PAIS;
@@ -93,7 +101,18 @@ document.addEventListener('DOMContentLoaded', function () {
             fecha_salida: document.getElementById('fecha_salida').value || null,
             salario: document.getElementById('salario').value
         };
-
+        console.log(empleadoData);
+        console.log('tipo de dato nombre', typeof(empleadoData.nombre));
+        console.log('tipo de dato apellido', typeof(empleadoData.apellido));
+        console.log('tipo de dato direccion', typeof(empleadoData.direccion));
+        console.log('tipo de dato pais', typeof(empleadoData.pais));
+        console.log('tipo de dato telefono', typeof(empleadoData.telefono));
+        console.log('tipo de dato email', typeof(empleadoData.email));
+        console.log('tipo de dato area', typeof(empleadoData.area));
+        console.log('tipo de dato fecha_ingreso', typeof(empleadoData.fecha_ingreso));
+        console.log('tipo de dato fecha_salida', typeof(empleadoData.fecha_salida));
+        console.log('tipo de dato salario', typeof(empleadoData.salario));
+        
         fetch('/empleados/add', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
