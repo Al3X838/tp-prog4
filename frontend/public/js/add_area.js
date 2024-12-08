@@ -19,7 +19,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     text: 'El área se ha agregado correctamente.',
                     confirmButtonText: 'Aceptar'
                 }).then(() => {
-                    window.location.href = '../list_areas.html'; // Redirige tras el éxito
+                    history.go(-1);
+                    history.replaceState(null, '', '/list_areas.html');
+                    history.replaceState(null, '', '/home.html'); // Cambiar la URL actual a /list_area
+                    window.location.href = '/list_areas.html'; // Redirige tras el éxito
+                    
                 });
             } else {
                 Swal.fire({
