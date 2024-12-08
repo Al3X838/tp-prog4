@@ -76,19 +76,15 @@ router.post('/add', async (req, res) => {
         nombre,
         categoria,
         marca,
-        precio_costo,
-        precio_venta,
-        fecha_adquisicion,
-        garantia,
-        existencia
+        garantia
     } = req.body;
 
     try {
         const connection = await getConnection();
         await connection.query(`
-            INSERT INTO PRODUCTOS (NOMBRE, CATEGORIA, MARCA, PRECIO_COSTO, PRECIO_VENTA, FECHA_ADQUISICION, GARANTIA, EXISTENCIA) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-            [nombre, categoria, marca, precio_costo, precio_venta, fecha_adquisicion, garantia, existencia]
+            INSERT INTO PRODUCTOS (NOMBRE, CATEGORIA, MARCA, GARANTIA) 
+            VALUES (?, ?, ?, ?,)`,
+            [nombre, categoria, marca, garantia]
         );
         await connection.close();
         res.json({ success: true });
@@ -104,21 +100,16 @@ router.post('/update/:id', async (req, res) => {
         nombre,
         categoria,
         marca,
-        precio_costo,
-        precio_venta,
-        fecha_adquisicion,
-        garantia,
-        existencia
+        garantia
     } = req.body;
 
     try {
         const connection = await getConnection();
         await connection.query(`
             UPDATE PRODUCTOS 
-            SET NOMBRE = ?, CATEGORIA = ?, MARCA = ?, PRECIO_COSTO = ?, PRECIO_VENTA = ?, 
-                FECHA_ADQUISICION = ?, GARANTIA = ?, EXISTENCIA = ?
+            SET NOMBRE = ?, CATEGORIA = ?, MARCA = ?, GARANTIA = ?
             WHERE PRODUCTO = ?`,
-            [nombre, categoria, marca, precio_costo, precio_venta, fecha_adquisicion, garantia, existencia, id]
+            [nombre, categoria, marca, garantia, id]
         );
         await connection.close();
         res.json({ success: true });

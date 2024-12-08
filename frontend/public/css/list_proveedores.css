@@ -1,29 +1,168 @@
-
-        body {
-            background-color: #f8f9fa;
-        }
-        .navbar {
-            background-color: #343a40 !important;
-        }
-        .navbar-brand, .nav-link {
-            color: #ffffff !important;
-        }
-        .nav-link:hover {
-            color: #ffc107 !important;
-        }
-        .btn-primary {
-            background-color: #ffc107;
-            border-color: #ffc107;
-            color: #343a40;
-        }
-        .btn-primary:hover {
-            background-color: #e0a800;
-            border-color: #d39e00;
-        }
-        .container h2 {
-            color: #343a40;
-        }
-        .error-message {
-            color: red;
-            font-weight: bold;
-        }
+:root {
+    --color-primary: #3498db;
+    --color-secondary: #2c3e50;
+    --color-accent: #e74c3c;
+    --color-background: #f8f9fa;
+    --color-text: #34495e;
+    --color-text-light: #7f8c8d;
+    --color-success: #2ecc71;
+    --color-warning: #f39c12;
+    --color-error: #e74c3c;
+    --font-primary: 'Roboto', sans-serif;
+    --font-secondary: 'Open Sans', sans-serif;
+    --transition-speed: 0.3s;
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  body {
+    background-color: var(--color-background);
+    font-family: var(--font-primary);
+    color: var(--color-text);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar {
+    background-color: var(--color-secondary) !important;
+    box-shadow: var(--box-shadow);
+    padding: 1rem 0;
+  }
+  
+  .navbar-brand, .nav-link {
+    color: #ffffff !important;
+    transition: color var(--transition-speed);
+  }
+  
+  .navbar-brand {
+    font-family: var(--font-secondary);
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  
+  .nav-link {
+    font-weight: 500;
+  }
+  
+  .nav-link:hover {
+    color: var(--color-primary) !important;
+  }
+  
+  .container h2 {
+    color: var(--color-secondary);
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 2rem;
+  }
+  
+  .btn-primary {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #ffffff;
+    font-weight: 600;
+    transition: all var(--transition-speed);
+    padding: 0.5rem 1.5rem;
+    border-radius: 30px;
+  }
+  
+  .btn-primary:hover {
+    background-color: #2980b9;
+    border-color: #2980b9;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: var(--box-shadow);
+  }
+  
+  .table {
+    margin-top: 2rem;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+  }
+  
+  .table thead {
+    background-color: var(--color-secondary);
+    color: #ffffff;
+  }
+  
+  .table th, .table td {
+    padding: 1rem;
+    vertical-align: middle;
+  }
+  
+  .table tbody tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.02);
+  }
+  
+  .table tbody tr:hover {
+    background-color: rgba(52, 152, 219, 0.1);
+    transition: background-color var(--transition-speed);
+  }
+  
+  .error-message {
+    color: var(--color-error);
+    font-weight: 600;
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+  }
+  
+  @media (max-width: 768px) {
+    .table {
+      font-size: 0.9rem;
+    }
+    
+    .container h2 {
+      font-size: 1.75rem;
+    }
+    
+    .btn-primary {
+      padding: 0.4rem 1.2rem;
+      font-size: 0.9rem;
+    }
+  }
+  
+  /* Add smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  
+  .container {
+    animation: fadeIn 0.8s ease-out;
+  }
+  
+  /* Improve form styles */
+  .form-control {
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+    transition: border-color var(--transition-speed);
+  }
+  
+  .form-control:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+  }
+  
+  /* Add styles for success and warning states */
+  .text-success {
+    color: var(--color-success);
+  }
+  
+  .text-warning {
+    color: var(--color-warning);
+  }
+  
+  /* Improve accessibility */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }

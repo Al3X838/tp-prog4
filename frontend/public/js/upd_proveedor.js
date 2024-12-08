@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const urlParams = new URLSearchParams(window.location.search); 
     const proveedorId = urlParams.get('id');
     const errorMessage = document.getElementById('error-message');
+    const cancelButton = document.getElementById('cancel-button'); // Botón de cancelar
+
 
     // Método para cargar la lista de países
     const loadPaises = () => {
@@ -96,7 +98,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     title: '¡Actualizado!',
                     text: 'El proveedor ha sido actualizado correctamente.'
                 }).then(() => {
-                    window.location.href = '../list_proveedores.html'; 
+                    history.go(-1);
+                    history.replaceState(null, '', '/list_proveedores.html'); // Cambiar la URL actual a /list_area
+                    history.replaceState(null, '', '/home.html'); 
+                    setTimeout(() => {
+                        location.reload(); // Asegura que la página se recargue
+                    }, 100);
+                    window.location.href = '/list_proveedores.html'; // Redirige tras el éxito
                 });
             } else {
                 Swal.fire({
@@ -115,4 +123,9 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error al actualizar el proveedor:', error.message);
         });
     });
+
+    cancelButton.addEventListener('click', function () {
+        window.location.href = '../list_proveedores.html'; // Regresa a la página anterior
+    });
+
 });

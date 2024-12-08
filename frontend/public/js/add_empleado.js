@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('add-empleado-form');
+    const cancelButton = document.getElementById('cancel-button'); // Botón de cancelar
+
 
     // Cargar lista de países
     const loadCountries = () => {
@@ -101,17 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
             fecha_salida: document.getElementById('fecha_salida').value || null,
             salario: document.getElementById('salario').value
         };
-        console.log(empleadoData);
-        console.log('tipo de dato nombre', typeof(empleadoData.nombre));
-        console.log('tipo de dato apellido', typeof(empleadoData.apellido));
-        console.log('tipo de dato direccion', typeof(empleadoData.direccion));
-        console.log('tipo de dato pais', typeof(empleadoData.pais));
-        console.log('tipo de dato telefono', typeof(empleadoData.telefono));
-        console.log('tipo de dato email', typeof(empleadoData.email));
-        console.log('tipo de dato area', typeof(empleadoData.area));
-        console.log('tipo de dato fecha_ingreso', typeof(empleadoData.fecha_ingreso));
-        console.log('tipo de dato fecha_salida', typeof(empleadoData.fecha_salida));
-        console.log('tipo de dato salario', typeof(empleadoData.salario));
+        
         
         fetch('/empleados/add', {
             method: 'POST',
@@ -127,7 +119,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     text: 'El empleado se ha agregado correctamente.',
                     confirmButtonText: 'Aceptar'
                 }).then(() => {
-                    window.location.href = '/list_empleados.html'; // Redirige después de la confirmación
+                    history.go(-1);
+                    history.replaceState(null, '', '/list_empleados.html'); // Cambiar la URL actual a /list_area
+                    history.replaceState(null, '', '/home.html'); 
+                    setTimeout(() => {
+                        location.reload(); // Asegura que la página se recargue
+                    }, 100);
+                    window.location.href = '/list_empleados.html'; // Redirige tras el éxito
                 });
             } else {
                 Swal.fire({
@@ -148,4 +146,8 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     });
+    cancelButton.addEventListener('click', function () {
+        window.location.href = '../list_empleados.html'; // Regresa a la página anterior
+    });
+
 });

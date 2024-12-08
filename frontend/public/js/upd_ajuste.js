@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('update-ajuste-form');
     const urlParams = new URLSearchParams(window.location.search);
     const ajusteId = urlParams.get('id');
+    const cancelButton = document.getElementById('cancel-button'); // Botón de cancelar
+
     
 
     // Cargar lista de productos
@@ -167,7 +169,13 @@ document.addEventListener('DOMContentLoaded', function () {
                         title: '¡Actualizado!',
                         text: 'El ajuste ha sido actualizado correctamente.',
                     }).then(() => {
-                        window.location.href = '/list_ajustes.html';
+                        history.go(-1);
+                    history.replaceState(null, '', '/list_ajustes.html'); // Cambiar la URL actual a /list_area
+                    history.replaceState(null, '', '/home.html'); 
+                    setTimeout(() => {
+                        location.reload(); // Asegura que la página se recargue
+                    }, 100);
+                    window.location.href = '/list_ajustes.html'; // Redirige tras el éxito
                     });
                 } else {
                     Swal.fire({
@@ -185,6 +193,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
                 console.error('Error al actualizar ajuste:', error);
             });
+    });
+    cancelButton.addEventListener('click', function () {
+        window.location.href = '../list_ajustes.html'; // Regresa a la página anterior
     });
 
     

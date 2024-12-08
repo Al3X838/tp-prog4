@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const categoriaIdInput = document.getElementById('categoria-id');
     const categoriaNameInput = document.getElementById('categoria-name');
     const errorMessage = document.getElementById('error-message');
+    const cancelButton = document.getElementById('cancel-button'); // Botón de cancelar
+
 
     const urlParams = new URLSearchParams(window.location.search);
     const categoriaId = urlParams.get('id');
@@ -50,7 +52,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     title: '¡Actualizado!',
                     text: 'La categoría ha sido actualizada correctamente.'
                 }).then(() => {
-                    window.location.href = '/list_categorias.html';
+                    history.go(-1);
+                    history.replaceState(null, '', '/list_categorias.html'); // Cambiar la URL actual a /list_area
+                    history.replaceState(null, '', '/home.html'); 
+                    setTimeout(() => {
+                        location.reload(); // Asegura que la página se recargue
+                    }, 100);
+                    window.location.href = '/list_categorias.html'; // Redirige tras el éxito
                 });
             } else {
                 Swal.fire({
@@ -69,4 +77,8 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error al actualizar la categoría:', error);
         });
     });
+    cancelButton.addEventListener('click', function () {
+        window.location.href = '../list_categorias.html'; // Regresa a la página anterior
+    });
+
 });

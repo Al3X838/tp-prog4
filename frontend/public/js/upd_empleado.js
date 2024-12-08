@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('update-empleado-form');
     const urlParams = new URLSearchParams(window.location.search);
     const empleadoId = urlParams.get('id');
+    const cancelButton = document.getElementById('cancel-button'); // Botón de cancelar
+
 
     // Método para cargar la lista de países
     const loadCountries = () => {
@@ -125,7 +127,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     title: '¡Actualizado!',
                     text: 'El empleado ha sido actualizado correctamente.'
                 }).then(() => {
-                    window.location.href = '/list_empleados.html'; // Redirige a la página de empleados
+                    history.go(-1);
+                    history.replaceState(null, '', '/list_empleados.html'); // Cambiar la URL actual a /list_area
+                    history.replaceState(null, '', '/home.html'); 
+                    setTimeout(() => {
+                        location.reload(); // Asegura que la página se recargue
+                    }, 100);
+                    window.location.href = '/list_empleados.html'; // Redirige tras el éxito
                 });
             } else {
                 Swal.fire({
@@ -144,4 +152,9 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error al actualizar empleado:', error);
         });
     });
+
+    cancelButton.addEventListener('click', function () {
+        window.location.href = '../list_empleados.html'; // Regresa a la página anterior
+    });
+
 });

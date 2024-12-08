@@ -1,28 +1,126 @@
-
-        body {
-            background-color: #f8f9fa;
-        }
-        .container {
-            max-width: 500px;
-            margin-top: 50px;
-            background-color: #ffffff;
-            padding: 30px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-        }
-        .btn-primary {
-            background-color: #ffc107;
-            border-color: #ffc107;
-            color: #343a40;
-        }
-        .btn-primary:hover {
-            background-color: #e0a800;
-            border-color: #d39e00;
-        }
-        .form-group label {
-            color: #495057;
-        }
-        h2 {
-            color: #343a40;
-        }
- 
+:root {
+    --color-primary: #3498db;
+    --color-primary-hover: #42b0f9;
+    --color-secondary: #343a40;
+    --color-background: #f8f9fa;
+    --color-text: #495057;
+    --color-white: #ffffff;
+    --font-primary: 'Roboto', sans-serif;
+    --box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    --border-radius: 10px;
+    --transition: all 0.3s ease;
+  }
+  
+  body {
+    font-family: var(--font-primary);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    max-width: 500px;
+    margin: 100px auto 0;
+    background-color: var(--color-white);
+    padding: 40px;
+    box-shadow: var(--box-shadow);
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+  }
+  
+  .container:hover {
+    transform: translateY(-5px);
+  }
+  
+  h2 {
+    color: var(--color-secondary);
+    font-size: 2rem;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  .form-group {
+    margin-bottom: 25px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--color-text);
+    font-weight: 500;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    transition: var(--transition);
+  }
+  
+  .form-control:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+  }
+  
+  .btn-primary {
+    background-color: var(--color-primary);
+    border: none;
+    color: var(--color-secondary);
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: var(--transition);
+    width: 100%;
+  }
+  
+  .btn-primary:hover {
+    background-color: var(--color-primary-hover);
+    transform: translateY(-2px);
+  }
+  
+  @media (max-width: 576px) {
+    .container {
+      margin: 50px 20px;
+      padding: 30px;
+    }
+  
+    h2 {
+      font-size: 1.75rem;
+    }
+  
+    .form-control, .btn-primary {
+      font-size: 14px;
+    }
+  }
+  
+  /* Accessibility improvements */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+  
+  /* Animation for form submission feedback */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .submission-message {
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  

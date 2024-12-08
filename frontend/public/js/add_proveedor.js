@@ -1,48 +1,46 @@
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('add-proveedor-form');
+    const cancelButton = document.getElementById('cancel-button'); // Botón de cancelar
+
 
     const loadPaises = () => {
-        fetch('/paises/') // Asegúrate de que la URL está alineada con el microservicio
+        fetch('/paises/') 
             .then(response => {
                 if (!response.ok) throw new Error('Network response was not ok');
-                return response.json();
+                return response.json(); 
             })
             .then(data => {
-                if (data.success) {
-                    const paisSelect = document.getElementById('pais');
+                if (data.success) { 
+                    const paisSelect = document.getElementById('pais'); 
 
                     const defaultOption = document.createElement('option');
+                    paisSelect.appendChild(defaultOption);
                     defaultOption.value = '';
-                    defaultOption.textContent = 'Selecciona un Pais';
+                    defaultOption.textContent = 'Selecciona un pais';
                     defaultOption.selected = true;
                     defaultOption.disabled = true;
-                    paisSelect.appendChild(defaultOption);
 
-
-
-                    data.paises.forEach(pais => {
-                        const option = document.createElement('option');
-                        option.value = pais.PAIS;
-                        option.textContent = `${pais.NOMBRE} (${pais.PAIS})`;
+                    data.paises.forEach(pais => { 
+                        const option = document.createElement('option'); 
+                        option.value = pais.PAIS; 
+                        option.textContent = pais.NOMBRE + '('+ pais.PAIS +')'; 
                         paisSelect.appendChild(option);
                     });
                 } else {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: data.error || 'Error al cargar la lista de países.',
-                        confirmButtonText: 'Aceptar'
+                        text: data.error || 'Error al cargar la lista de países.'
                     });
                 }
             })
             .catch(error => {
-                console.error('Error al cargar países:', error);
                 Swal.fire({
                     icon: 'error',
-                    title: 'Error de conexión',
-                    text: 'No se pudo cargar la lista de países. Inténtalo más tarde.',
-                    confirmButtonText: 'Aceptar'
+                    title: 'Error',
+                    text: 'Error al cargar países.'
                 });
+                console.error('Error al cargar países:', error);
             });
     };
 
@@ -57,18 +55,11 @@ document.addEventListener('DOMContentLoaded', function () {
             pais: document.getElementById('pais').value,
             telefono: document.getElementById('telefono').value.trim(),
             email: document.getElementById('email').value.trim(),
-            fecha: document.getElementById('fecha_inicio').value.trim(),
+            fecha_inicio: document.getElementById('fecha_inicio').value,
 
         };
-        console.log(provedorData);
-        console.log('tipo de dato nombre', typeof proveedorData.nombre);
-        console.log('tipo de dato direccion', typeof proveedorData.direccion);
-        console.log('tipo de dato pais', typeof proveedorData.pais);
-        console.log('tipo de dato telefono', typeof proveedorData.telefono);
-        console.log('tipo de dato email', typeof proveedorData.email);
-        console.log('tipo de dato fecha', typeof proveedorData.fecha);
+        console.log(proveedorData);
         
-
         fetch('/proveedores/add', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -83,7 +74,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     text: 'El proveedor se ha agregado correctamente.',
                     confirmButtonText: 'Aceptar'
                 }).then(() => {
-                    window.location.href = '../list_proveedores.html'; // Redirige tras el éxito
+                    history.go(-1);
+                    history.replaceState(null, '', '/list_proveedores.html'); // Cambiar la URL actual a /list_area
+                    history.replaceState(null, '', '/home.html'); 
+                    setTimeout(() => {
+                        location.reload(); // Asegura que la página se recargue
+                    }, 100);
+                    window.location.href = '/list_proveedores.html'; // Redirige tras el éxito
                 });
             } else {
                 Swal.fire({
@@ -104,4 +101,9 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     });
+
+    cancelButton.addEventListener('click', function () {
+        window.location.href = '../list_proveedores.html'; // Regresa a la página anterior
+    });
+
 });

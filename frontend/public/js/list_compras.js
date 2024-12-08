@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             <td>${compra.COMPRA}</td>
                             <td>${compra.PROVEEDOR_NOMBRE}</td>
                             <td>${compra.FECHA}</td>
+                            <td>${compra.PRODUCTO_NOMBRE} (${compra.PRODUCTO_ID})</td>
                             <td>${compra.PRECIO_COSTO}</td>
                             <td>
                                 <button class="btn btn-primary" onclick="editCompra(${compra.COMPRA})">Actualizar</button>
@@ -31,7 +32,6 @@ document.addEventListener('DOMContentLoaded', function () {
                                     <div class="detalles-content">
                                         <p><strong>Proveedor:</strong> ${compra.PROVEEDOR_NOMBRE} (${compra.PROVEEDOR_ID})</p>
                                         <p><strong>Fecha:</strong> ${compra.FECHA}</p>
-                                        <p><strong>Productos:</strong>${compra.PRODUCTO_NOMBRE} (${compra.PRODUCTO_ID})</p>
                                         <p><strong>Empleado:</strong> ${compra.EMPLEADO_NOMBRE} (${compra.EMPLEADO_ID})</p>
                                     </div>
                                 </div>

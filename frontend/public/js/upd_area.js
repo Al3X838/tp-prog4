@@ -52,7 +52,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     title: 'Área Actualizada',
                     text: 'La información del área ha sido actualizada exitosamente.',
                 }).then(() => {
-                    window.location.href = '/list_areas.html';
+                    history.go(-1);
+                    history.replaceState(null, '', '/list_areas.html'); // Cambiar la URL actual a /list_area
+                    history.replaceState(null, '', '/home.html'); 
+                    setTimeout(() => {
+                        location.reload(); // Asegura que la página se recargue
+                    }, 100);
+                    window.location.href = '/list_areas.html'; // Redirige tras el éxito
                 });
             } else {
                 // Error al actualizar el área

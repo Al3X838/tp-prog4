@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('add-producto-form');
+    const cancelButton = document.getElementById('cancel-button'); // Botón de cancelar
+
 
     // Cargar lista de categorías
     const loadCategorias = () => {
@@ -11,18 +13,18 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 if (data.success) {
                     const categoriaSelect = document.getElementById('categoria');
-                    /*
+                    
                     const defaultOption = document.createElement('option');
                     defaultOption.value = '';
                     defaultOption.textContent = 'Selecciona una categoria';
                     defaultOption.selected = true;
                     defaultOption.disabled = true;
                     categoriaSelect.appendChild(defaultOption);
-                    */
+                    
                     data.categorias.forEach(categoria => {
                         const option = document.createElement('option');
                         option.value = categoria.CATEGORIA;
-                        option.textContent = categoria.NOMBRE;
+                        option.textContent = categoria.NOMBRE + '(' + categoria.CATEGORIA + ')';
                         categoriaSelect.appendChild(option);
                     });
                 } else {
@@ -55,18 +57,18 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 if (data.success) {
                     const marcaSelect = document.getElementById('marca');
-                    /*
-                    marcaSelect.appendChild(defaultOption);
+                    
                     const defaultOption = document.createElement('option');
+                    marcaSelect.appendChild(defaultOption);
                     defaultOption.value = '';
                     defaultOption.textContent = 'Selecciona una marca';
                     defaultOption.selected = true;
                     defaultOption.disabled = true;
-                    */
+                    
                     data.marcas.forEach(marca => {
                         const option = document.createElement('option');
                         option.value = marca.MARCA;
-                        option.textContent = marca.NOMBRE;
+                        option.textContent = marca.NOMBRE + '(' + marca.MARCA + ')';
                         marcaSelect.appendChild(option);
                     });
                 } else {
@@ -101,21 +103,11 @@ document.addEventListener('DOMContentLoaded', function () {
             nombre: document.getElementById('nombre').value.trim(),
             categoria: document.getElementById('categoria').value,
             marca: document.getElementById('marca').value,
-            precio_costo: parseFloat(document.getElementById('precio_costo').value) || 0,
-            precio_venta: parseFloat(document.getElementById('precio_venta').value) || 0,
-            fecha_adquisicion: document.getElementById('fecha_adquisicion').value,
             garantia: document.getElementById('garantia').value || 'N',
-            existencia: parseInt(document.getElementById('existencia').value) || 0,
+            
         };
         console.log(productoData);
-        console.log('tipo nombre', typeof productoData.nombre);
-        console.log('tipo categoria', typeof productoData.categoria);
-        console.log('tipo marca', typeof productoData.marca);
-        console.log('tipo precio_costo', typeof productoData.precio_costo);
-        console.log('tipo precio_venta', typeof productoData.precio_venta);
-        console.log('tipo fecha_adquisicion', typeof productoData.fecha_adquisicion);
-        console.log('tipo garantia', typeof productoData.garantia);
-        console.log('tipo existencia', typeof productoData.existencia);
+        
 
         fetch('/productos/add', {
             method: 'POST',
@@ -131,7 +123,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     text: 'El producto se ha agregado correctamente.',
                     confirmButtonText: 'Aceptar'
                 }).then(() => {
-                    window.location.href = '/list_productos.html'; // Redirigir a la lista de productos después de la confirmación
+                    history.go(-1);
+                    history.replaceState(null, '', '/list_productos.html'); // Cambiar la URL actual a /list_area
+                    history.replaceState(null, '', '/home.html'); 
+                    setTimeout(() => {
+                        location.reload(); // Asegura que la página se recargue
+                    }, 100);
+                    window.location.href = '/list_productos.html'; // Redirige tras el éxito 
                 });
             } else {
                 Swal.fire({
@@ -152,4 +150,8 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     });
+    cancelButton.addEventListener('click', function () {
+        window.location.href = '../list_productos.html'; // Regresa a la página anterior
+    });
+
 });

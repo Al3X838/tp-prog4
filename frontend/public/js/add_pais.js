@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('add-pais-form');
+    const cancelButton = document.getElementById('cancel-button'); // Botón de cancelar
+
 
     form.addEventListener('submit', function (event) {
         event.preventDefault();
@@ -19,7 +21,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     text: 'El país se ha agregado correctamente.',
                     confirmButtonText: 'Aceptar'
                 }).then(() => {
-                    window.location.href = '../list_paises.html'; // Redirige después de cerrar el mensaje
+                    history.go(-1);
+                    history.replaceState(null, '', '/list_paises.html'); // Cambiar la URL actual a /list_area
+                    history.replaceState(null, '', '/home.html'); 
+                    setTimeout(() => {
+                        location.reload(); // Asegura que la página se recargue
+                    }, 100);
+                    window.location.href = '/list_paises.html'; // Redirige tras el éxito
                 });
             } else {
                 Swal.fire({
@@ -40,4 +48,8 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     });
+    cancelButton.addEventListener('click', function () {
+        window.location.href = '../list_paises.html'; // Regresa a la página anterior
+    });
+
 });

@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('update-producto-form');
     const urlParams = new URLSearchParams(window.location.search);
     const productoId = urlParams.get('id');
+    const cancelButton = document.getElementById('cancel-button'); // Botón de cancelar
+
 
     // Método para cargar la lista de categorías
     const loadCategorias = () => {
@@ -68,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 if (data.success && data.producto) {
                     console.log(data.producto);
-                    document.getElementById('nombre').value = data.producto.NOMBRE;
+                    document.getElementById('nombre').value = data.producto.NOMBRE + data.producto.PRODUCTO;
                     document.getElementById('categoria').value = data.producto.CATEGORIA;
                     document.getElementById('marca').value = data.producto.MARCA;
                     document.getElementById('precio_costo').value = data.producto.PRECIO_COSTO;
@@ -101,11 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
             nombre: document.getElementById('nombre').value.trim(),
             categoria: document.getElementById('categoria').value,
             marca: document.getElementById('marca').value,
-            precio_costo: document.getElementById('precio_costo').value.trim(),
-            precio_venta: document.getElementById('precio_venta').value.trim(),
-            existencia: document.getElementById('existencia').value.trim(),
-            fecha_adquisicion: document.getElementById('fecha_adquisicion').value,
-            garantia: document.getElementById('garantia').value === 'Sí' ? 'S' : 'N',
+            garantia: document.getElementById('garantia').value === 'Sí' ? 'S' : 'N'
         };
 
         fetch(`/productos/update/${productoId}`, {
@@ -140,4 +138,8 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error al actualizar producto:', error);
         });
     });
+    cancelButton.addEventListener('click', function () {
+        window.location.href = '../list_productos.html'; // Regresa a la página anterior
+    });
+
 });

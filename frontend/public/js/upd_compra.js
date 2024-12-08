@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('update-compra-form');
     const urlParams = new URLSearchParams(window.location.search);
     const compraId = urlParams.get('id');
+    const cancelButton = document.getElementById('cancel-button'); // Botón de cancelar
+
 
     // Método para cargar la lista de países
     const loadProductos = () => {
@@ -193,7 +195,13 @@ document.addEventListener('DOMContentLoaded', function () {
                         text: 'La compra se ha actualizado correctamente.',
                         confirmButtonText: 'Aceptar'
                     }).then(() => {
-                        window.location.href = '/list_compras.html';
+                        history.go(-1);
+                    history.replaceState(null, '', '/list_compras.html'); // Cambiar la URL actual a /list_area
+                    history.replaceState(null, '', '/home.html'); 
+                    setTimeout(() => {
+                        location.reload(); // Asegura que la página se recargue
+                    }, 100);
+                    window.location.href = '/list_compras.html'; // Redirige tras el éxito
                     });
                 } else {
                     Swal.fire({
@@ -215,5 +223,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
+    cancelButton.addEventListener('click', function () {
+        window.location.href = '../list_compras.html'; // Regresa a la página anterior
+    });
 
 });

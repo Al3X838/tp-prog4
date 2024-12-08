@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const paisIdInput = document.getElementById('pais-id');
     const paisNameInput = document.getElementById('pais-name');
     const errorMessage = document.getElementById('error-message');
+    const cancelButton = document.getElementById('cancel-button'); // Botón de cancelar
+
 
     const urlParams = new URLSearchParams(window.location.search);
     const paisId = urlParams.get('id');
@@ -51,7 +53,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     title: '¡Actualizado!',
                     text: 'El país ha sido actualizado correctamente.'
                 }).then(() => {
-                    window.location.href = '../list_paises.html'; // Redirige a la lista de países
+                    history.go(-1);
+                    history.replaceState(null, '', '/list_paises.html'); // Cambiar la URL actual a /list_area
+                    history.replaceState(null, '', '/home.html'); 
+                    setTimeout(() => {
+                        location.reload(); // Asegura que la página se recargue
+                    }, 100);
+                    window.location.href = '/list_paises.html'; // Redirige tras el éxitopaises
                 });
             } else {
                 Swal.fire({
@@ -70,4 +78,8 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error al actualizar el país:', error);
         });
     });
+    cancelButton.addEventListener('click', function () {
+        window.location.href = '../list_paises.html'; // Regresa a la página anterior
+    });
+
 });

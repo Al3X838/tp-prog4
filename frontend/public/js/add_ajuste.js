@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('add-ajuste-form');
     const productoSelect = document.getElementById('producto');
     const empleadoSelect = document.getElementById('empleado');
+    const cancelButton = document.getElementById('cancel-button'); // Botón de cancelar
+
 
     // Cargar lista de productos
     const loadProductos = () => {
@@ -13,20 +15,20 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 if (data.success) {
                     const productoSelect = document.getElementById('producto');
-                
-                // Add default option
-                const defaultOption = document.createElement('option');
-                defaultOption.value = '';
-                defaultOption.textContent = 'Selecciona un producto';
-                defaultOption.selected = true;
-                defaultOption.disabled = true;
-                productoSelect.appendChild(defaultOption);
 
-                data.productos.forEach(producto => {
-                    const option = document.createElement('option');
-                    option.value = producto.PRODUCTO;
-                    option.textContent = producto.PRODUCTO_NOMBRE + '(' + producto.PRODUCTO + ')';
-                    productoSelect.appendChild(option);
+                    // Add default option
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.textContent = 'Selecciona un producto';
+                    defaultOption.selected = true;
+                    defaultOption.disabled = true;
+                    productoSelect.appendChild(defaultOption);
+
+                    data.productos.forEach(producto => {
+                        const option = document.createElement('option');
+                        option.value = producto.PRODUCTO;
+                        option.textContent = producto.PRODUCTO_NOMBRE + '(' + producto.PRODUCTO + ')';
+                        productoSelect.appendChild(option);
                     });
                 } else {
                     Swal.fire({
@@ -58,21 +60,21 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 if (data.success) {
                     const empleadoSelect = document.getElementById('empleado');
-                
-                // Add default option
-                const defaultOption = document.createElement('option');
-                defaultOption.value = '';
-                defaultOption.textContent = 'Selecciona un empleado';
-                defaultOption.selected = true;
-                defaultOption.disabled = true;
-                empleadoSelect.appendChild(defaultOption);
 
-                data.empleados.forEach(empleado => {
-                    const option = document.createElement('option');
-                    option.value = empleado.EMPLEADO;
-                    option.textContent = empleado.EMPLEADO_NOMBRE + '(' + empleado.EMPLEADO + ')';
-                    empleadoSelect.appendChild(option);
-                    
+                    // Add default option
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.textContent = 'Selecciona un empleado';
+                    defaultOption.selected = true;
+                    defaultOption.disabled = true;
+                    empleadoSelect.appendChild(defaultOption);
+
+                    data.empleados.forEach(empleado => {
+                        const option = document.createElement('option');
+                        option.value = empleado.EMPLEADO;
+                        option.textContent = empleado.EMPLEADO_NOMBRE + '(' + empleado.EMPLEADO + ')';
+                        empleadoSelect.appendChild(option);
+
                     });
                 } else {
                     Swal.fire({
@@ -127,7 +129,13 @@ document.addEventListener('DOMContentLoaded', function () {
                         confirmButtonText: 'Aceptar'
                     }).then(() => {
                         form.reset();
-                        window.location.href = '/list_ajustes.html'; // Redirige a la lista de ajustes
+                        history.go(-1);
+                        history.replaceState(null, '', '/list_ajustes.html'); // Cambiar la URL actual a /list_area
+                        history.replaceState(null, '', '/home.html');
+                        setTimeout(() => {
+                            location.reload(); // Asegura que la página se recargue
+                        }, 100);
+                        window.location.href = '/list_ajustes.html'; // Redirige tras el éxito
                     });
                 } else {
                     Swal.fire({
@@ -149,5 +157,8 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     });
 
-    
+    cancelButton.addEventListener('click', function () {
+        window.location.href = '../list_ajustes.html'; // Regresa a la página anterior
+    });
+
 });
