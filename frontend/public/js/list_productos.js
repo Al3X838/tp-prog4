@@ -98,7 +98,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (data.success) {
                     callback(); // Recarga la lista de productos
                 } else {
-                    alert(data.error || 'Error al eliminar el producto.');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.error || 'Error al eliminar el proveedor.',
+                        confirmButtonText: 'Aceptar'
+                    });
                 }
             })
             .catch(error => {

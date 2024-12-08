@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken');
 
 
 // Variables globales para almacenar las credenciales de forma temporal
-// no es muy recomendable que digamos
+
 global.dbUser = '';
 global.dbPassword = '';
 const claveMegaSecreta = 'global.dbPassword';
