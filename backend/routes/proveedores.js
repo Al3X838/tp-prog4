@@ -17,9 +17,13 @@ const getConnection = async () => {
 // Función para manejo de errores de base de datos
 // *** MODIFICACIÓN ***
 const handleDbError = (err, res, action) => {
-    const errorMessage = err?.odbcErrors?.[0]?.message || err.message || 'Unknown database error';
+    let errorMessage = err?.odbcErrors?.[0]?.message || err.message || 'Unknown database error';
+    if (errorMessage.includes("is referenced by foreign key")) {
+        
+        errorMessage = "No se puede realizar la operación porque el registro está relacionado con otros datos.";
+    }
     console.error(`Error al ${action}:`, errorMessage);
-    res.status(500).json({ success: false, error: `Database error while ${action}: ${errorMessage}` });
+    res.status(500).json({ success: false, error: `Error al ${action}: ${errorMessage}` });
 };
 
 // Ruta para obtener todos los proveedores
@@ -94,7 +98,7 @@ router.delete('/delete/:id', async (req, res) => {
         await connection.close();
         res.json({ success: true });
     } catch (err) {
-        handleDbError(err, res, 'deleting proveedores');
+        handleDbError(err, res, 'eliminar proveedores');
     }
 });
 

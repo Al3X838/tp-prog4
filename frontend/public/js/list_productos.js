@@ -46,7 +46,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             })
             .catch(error => {
-                alert('Error en la conexión con el servidor.');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error en la conexión con el servidor.',
+                    confirmButtonText: 'Aceptar'
+                });
                 console.error('Error al cargar productos:', error);
             });
     }
